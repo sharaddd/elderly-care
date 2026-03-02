@@ -1,73 +1,68 @@
-# Welcome to your Lovable project
+# Elderly Care — In-Home Nursing & Senior Care
 
-## Project info
+A modern, responsive web application for **Elderly Care**, providing compassionate in-home nursing and senior support services. This project features a professional design with integrated location services, service overviews, and family-focused communication tools.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![Elderly Care Banner](https://img.shields.io/badge/Elderly%20Care-Professional%20Nursing-2b6cb0?style=for-the-badge)
 
-## How can I edit this code?
+## 🚀 Recent Updates
+- **Transitioned to Agentic Development**: This project is now being developed using advanced agentic AI tools (Antigravity/Cursor) for rapid iteration and high-quality code.
+- **Enhanced UI**: Added a premium Top Bar with location-aware dispatching (e.g., Delhi center).
+- **Core Engine**: Fully migrated from a static prototype to a robust Vite + React + TypeScript architecture.
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
+- **Frontend**: React 18 + TypeScript
+- **Bundler**: Vite
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Icons**: Lucide React
+- **Typography**: Lora (Serif) & Source Sans 3 (Sans-serif)
+- **State Management**: React Query (TanStack Query) & React Hook Form
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 📂 Project Structure
+```text
+.
+├── src/
+│   ├── components/       # Reusable UI parts (Navbar, Hero, Services, etc.)
+│   ├── pages/            # Main page layouts (Index, NotFound)
+│   ├── hooks/            # Custom React hooks (Mobile detection, Toasting)
+│   ├── lib/              # Utility functions (Tailwind merging)
+│   └── assets/           # Images and static media
+├── public/               # Static public assets
+├── tailwind.config.ts    # Custom theme and design tokens
+└── vite.config.ts        # Fast development environment configuration
 ```
 
-**Edit a file directly in GitHub**
+## 🏁 Quick Start
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 1. Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
 
-**Use GitHub Codespaces**
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/sharaddd/elderly-care.git
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Navigate to the project directory
+cd "elderly-care"
 
-## What technologies are used for this project?
+# Install dependencies
+npm install
+```
 
-This project is built with:
+### 3. Run Locally
+```bash
+# Start the development server
+npm run dev
+```
+Open **[http://localhost:8080](http://localhost:8080)** in your browser to see the live app.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🧪 Testing
+```bash
+# Run unit tests
+npm test
+```
 
-## How can I deploy this project?
+## 📜 License
+Proprietary — Elderly Care Health, Inc.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+**Elderly Care** — *Trusted nurses who come to you for safe, calmer aging at home.*
