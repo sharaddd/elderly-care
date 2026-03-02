@@ -1,4 +1,4 @@
-import heroImage from "@/assets/hero-elderly.jpg";
+import heroImage from "@/assets/hero-new.jpg";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 
@@ -28,7 +28,7 @@ const HeroSection = () => {
             <Button size="lg" className="text-lg px-8 py-6" asChild>
               <a href="#services">Our Services</a>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
+            <Button size="lg" className="text-lg px-8 py-6 border border-white/40 bg-transparent text-white hover:bg-white/10 transition-all shadow-none hover:shadow-lg" asChild>
               <a href="#contact">
                 <Phone className="mr-2 h-5 w-5" /> Call Us Today
               </a>
