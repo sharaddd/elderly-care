@@ -1,6 +1,30 @@
 import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet } from "lucide-react";
 
+declare global {
+    interface Window {
+        ReactNativeWebView?: {
+            postMessage: (message: string) => void;
+        };
+    }
+}
+
 const MobileDashboard = () => {
+    const triggerMedicationNotification = () => {
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage('TRIGGER_MEDICATION_NOTIFICATION');
+        } else {
+            alert('Simulation: Medication Due notification sent to device');
+        }
+    };
+
+    const triggerAppointmentNotification = () => {
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage('TRIGGER_APPOINTMENT_NOTIFICATION');
+        } else {
+            alert('Simulation: Doctor Appointment notification sent to device');
+        }
+    };
+
     return (
         <div className="w-full h-full flex flex-col mx-auto px-4 gap-[22px] pt-24 pb-32">
             {/* Search Bar */}
@@ -45,7 +69,10 @@ const MobileDashboard = () => {
             {/* 3 Columns Grid */}
             <div className="grid grid-cols-3 gap-[10px]">
                 {/* Card 1 */}
-                <div className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/5] p-3.5 flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group">
+                <div
+                    onClick={triggerMedicationNotification}
+                    className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/5] p-3.5 flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group"
+                >
                     <Pill className="h-[22px] w-[22px] text-gray-700 mb-auto group-hover:scale-110 transition-transform" />
                     <span className="text-gray-900 text-[13px] font-medium leading-snug tracking-wide">today's<br />medication</span>
                 </div>
@@ -88,7 +115,10 @@ const MobileDashboard = () => {
                 <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
                     <span className="text-gray-800 text-[14px] font-medium tracking-wide">community</span>
                 </button>
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
+                <button
+                    onClick={triggerAppointmentNotification}
+                    className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group"
+                >
                     <span className="text-gray-800 text-[14px] font-medium tracking-wide">insurance claims</span>
                 </button>
                 <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
