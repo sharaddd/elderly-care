@@ -1,0 +1,51 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(50, 50)">
+    {/* Unit 1: Top (Reddish/Orange) */}
+    <g transform="rotate(0)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#F49553" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#F5A367" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#ED8956" />
+      <circle cx="0" cy="-45" r="7" fill="#F49553" />
+    </g>
+    
+    {/* Unit 2: Top Right (Yellow) */}
+    <g transform="rotate(60)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#ECC465" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#F6D683" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#ECC26A" />
+      <circle cx="0" cy="-45" r="7" fill="#ECC465" />
+    </g>
+
+    {/* Unit 3: Bottom Right (Light Green) */}
+    <g transform="rotate(120)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#AFC493" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#BDD0A2" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#AFC493" />
+      <circle cx="0" cy="-45" r="7" fill="#AFC493" />
+    </g>
+
+    {/* Unit 4: Bottom (Dark Green) */}
+    <g transform="rotate(180)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#4B8164" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#6E9E82" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#52866D" />
+      <circle cx="0" cy="-45" r="7" fill="#4B8164" />
+    </g>
+
+    {/* Unit 5: Bottom Left (Brown/Tan) */}
+    <g transform="rotate(240)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#AF8255" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#D59F67" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#C08B5B" />
+      <circle cx="0" cy="-45" r="7" fill="#AF8255" />
+    </g>
+
+    {/* Unit 6: Top Left (Coral) */}
+    <g transform="rotate(300)">
+      <path d="M0 0 L-18 -38 C-10 -42 -2 -35 0 -28 L18 -38 C10 -42 2 -35 0 -28 Z" fill="#D38666" />
+      <path d="M0 0 L-18 -38 C-12 -42 -4 -38 0 -28 Z" fill="#EA967A" />
+      <path d="M0 0 L18 -38 C12 -42 4 -38 0 -28 Z" fill="#D38666" />
+      <circle cx="0" cy="-45" r="7" fill="#D38666" />
+    </g>
+  </g>
+</svg>
