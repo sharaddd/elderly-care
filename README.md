@@ -1,68 +1,64 @@
-# Elderly Care — In-Home Nursing & Senior Care
+# Elderly Care — Compassionate Health & Safety Management 🩺
 
-A modern, responsive web application for **Elderly Care**, providing compassionate in-home nursing and senior support services. This project features a professional design with integrated location services, service overviews, and family-focused communication tools.
+### Empowering families through expert in-home nursing and intuitive care coordination.
 
-![Elderly Care Banner](https://img.shields.io/badge/Elderly%20Care-Professional%20Nursing-2b6cb0?style=for-the-badge)
+---
 
-## 🚀 Recent Updates
-- **Transitioned to Agentic Development**: This project is now being developed using advanced agentic AI tools (Antigravity/Cursor) for rapid iteration and high-quality code.
-- **Enhanced UI**: Added a premium Top Bar with location-aware dispatching (e.g., Delhi center).
-- **Core Engine**: Fully migrated from a static prototype to a robust Vite + React + TypeScript architecture.
+## 🌟 Product Vision
+Elderly Care is a high-fidelity platform designed to bridge the gap between professional nursing services and family peace of mind. Our mission is to transform the complex logistics of home-based senior care into a seamless, dignified experience for both the patient and their loved ones.
 
-## 🛠 Tech Stack
-- **Frontend**: React 18 + TypeScript
-- **Bundler**: Vite
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **Icons**: Lucide React
-- **Typography**: Lora (Serif) & Source Sans 3 (Sans-serif)
-- **State Management**: React Query (TanStack Query) & React Hook Form
+---
 
-## 📂 Project Structure
+## 📱 Mobile Command Center (New Dashboard Redesign)
+Our most recent sprint focused on a **User-Centric Mobile Dashboard** that transforms the application from a website into a functional digital caretaker companion.
+
+### Key Product Features:
+*   **Centralized Care Dashboard**: A high-priority "Ongoing Appointment" module with real-time caretaker status and a one-click **SOS Help System**.
+*   **Intuitive Health Grids**: Rapid access to Vitals, Medication Schedules, and Video Consultations—designed with a high-contrast white-theme interface for maximum visibility.
+*   **Smart Location Intelligence**: Dynamic location-aware dispatching that ensures local expertise is always assigned to your home.
+*   **Integrated Wallet & Payments**: Streamlined transaction management for transparent billing and insurance claims coordination.
+*   **Native App Experience**: Built as a hybrid React Native solution to provide a seamless, high-performance interface on iPhone and Android devices.
+
+---
+
+## 🎨 Design Philosophy — "Premium Simplicity"
+Applying a Product Manager's eye for detail, we pivoted the mobile UI to a **Light Mode Professional Aesthetic**:
+*   **Accessibility First**: Switched to a high-legibility light theme to ensure ease of use for elder users and vision-impaired family members.
+*   **Modern Aesthetics**: Utilizing subtle gray elevations and a clean typography system (Lora & Source Sans 3) to maintain a premium, trustworthy medical brand identity.
+*   **Action-Oriented UX**: Reduced "tap friction" by implementing a bottom navigation bar for secondary tools and a prominent top-level AI/Action area.
+
+---
+
+## 🛠 Tech Stack & Engineering
+*   **Web Core**: React 18 + TypeScript + Vite
+*   **Mobile Wrapper**: Expo / React Native (WebView Hybrid)
+*   **Styling**: Tailwind CSS for cross-platform visual consistency
+*   **Iconography**: Lucide React for consistent, lightweight UI elements
+*   **Design Tokens**: Custom-defined color palettes for Medical Trust and Urgent Actions (SOS)
+
+---
+
+## 📂 Architecture Overview
 ```text
 .
 ├── src/
-│   ├── components/       # Reusable UI parts (Navbar, Hero, Services, etc.)
-│   ├── pages/            # Main page layouts (Index, NotFound)
-│   ├── hooks/            # Custom React hooks (Mobile detection, Toasting)
-│   ├── lib/              # Utility functions (Tailwind merging)
-│   └── assets/           # Images and static media
-├── public/               # Static public assets
-├── tailwind.config.ts    # Custom theme and design tokens
-└── vite.config.ts        # Fast development environment configuration
+│   ├── components/       # Component-driven development (Navbar, Dashboard, Grids)
+│   ├── pages/            # Core routing and page layouts
+│   ├── hooks/            # Performance & UX behavior hooks
+│   └── assets/           # Optimized media and brand identity
+├── mobile-app-v2/        # React Native wrapper for native mobile deployment
+├── pwa-version/          # Fully responsive Web App implementation
+└── tailwind.config.ts    # Centralized design system tokens
 ```
-
-## 🏁 Quick Start
-
-### 1. Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
-
-### 2. Installation
-```bash
-# Clone the repository
-git clone https://github.com/sharaddd/elderly-care.git
-
-# Navigate to the project directory
-cd "elderly-care"
-
-# Install dependencies
-npm install
-```
-
-### 3. Run Locally
-```bash
-# Start the development server
-npm run dev
-```
-Open **[http://localhost:8080](http://localhost:8080)** in your browser to see the live app.
-
-## 🧪 Testing
-```bash
-# Run unit tests
-npm test
-```
-
-## 📜 License
-Proprietary — Elderly Care Health, Inc.
 
 ---
-**Elderly Care** — *Trusted nurses who come to you for safe, calmer aging at home.*
+
+## 🏁 Development Setup
+1.  **Clone & Install**: `git clone https://github.com/sharaddd/elderly-care.git` && `npm install`
+2.  **Launch Web**: `npm run dev`
+3.  **Launch Mobile**: Navigate to `mobile-app-v2` and run `npx expo start`
+
+---
+
+### **"Expert Care for Them. Peace of Mind for You."**
+*Elderly Care — Redefining how the world looks after its seniors.*
