@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
 import VideoConsultDialog from "./VideoConsultDialog";
+import DailyEssentialsDialog from "./DailyEssentialsDialog";
 
 declare global {
     interface Window {
@@ -20,6 +21,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const [isWalletOpen, setIsWalletOpen] = useState(false);
     const [isVitalsOpen, setIsVitalsOpen] = useState(false);
     const [isVideoConsultOpen, setIsVideoConsultOpen] = useState(false);
+    const [isDailyEssentialsOpen, setIsDailyEssentialsOpen] = useState(false);
 
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
@@ -60,6 +62,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
             <WalletDialog open={isWalletOpen} onOpenChange={isWalletOpen ? setIsWalletOpen : () => { }} />
             <VitalsDashboard open={isVitalsOpen} onOpenChange={setIsVitalsOpen} />
             <VideoConsultDialog open={isVideoConsultOpen} onOpenChange={setIsVideoConsultOpen} />
+            <DailyEssentialsDialog open={isDailyEssentialsOpen} onOpenChange={setIsDailyEssentialsOpen} />
 
             {/* Ongoing Appointment */}
             <div className="flex flex-col gap-2">
@@ -169,10 +172,31 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
 
             {/* 2 Columns Grid */}
             <div className="grid grid-cols-2 gap-[10px]">
-                {/* Card 1 */}
-                <div className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/3] p-[18px] flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group">
-                    <CalendarHeart className="h-[24px] w-[24px] text-gray-700 mb-auto group-hover:scale-110 transition-transform" />
-                    <span className="text-gray-900 text-[14px] font-medium leading-snug tracking-wide">everyday needs</span>
+                {/* Card 1: Everyday Needs */}
+                <div
+                    onClick={() => setIsDailyEssentialsOpen(true)}
+                    className="bg-white border border-gray-100 rounded-[22px] aspect-[4/3] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
+                >
+                    <div className="flex justify-between items-start">
+                        <div className="bg-orange-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300 shadow-sm border border-orange-100/30">
+                            <CalendarHeart className="h-[22px] w-[22px] text-orange-600 stroke-[2.5]" />
+                        </div>
+                        <div className="px-2.5 py-1 bg-orange-100/50 rounded-full border border-orange-100/50">
+                            <span className="text-[9px] font-black text-orange-600 uppercase tracking-tighter">7 SERVICES</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2.5 px-0.5">
+                            <ShoppingCart className="h-3.5 w-3.5 text-gray-300 group-hover:text-orange-400 transition-colors" />
+                            <Pill className="h-3.5 w-3.5 text-gray-300 group-hover:text-orange-400 transition-colors" />
+                            <Wrench className="h-3.5 w-3.5 text-gray-300 group-hover:text-orange-400 transition-colors" />
+                        </div>
+                        <span className="text-gray-900 text-[13.5px] font-bold leading-none tracking-tight uppercase">Everyday<br />needs</span>
+                    </div>
+
+                    {/* Decorative glow */}
+                    <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-orange-50/40 rounded-full blur-xl" />
                 </div>
 
                 {/* Card 2 */}
