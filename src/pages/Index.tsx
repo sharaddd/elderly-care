@@ -28,15 +28,19 @@ const Index = () => {
     <div className="min-h-screen bg-[#222222] flex items-center justify-center p-0 md:p-4 overflow-hidden">
       <div className="w-full max-w-[400px] h-[100dvh] md:h-[852px] bg-background relative shadow-2xl md:rounded-[40px] overflow-hidden border-0 md:border-[8px] border-gray-900 flex flex-col">
 
-        {/* Main Content Layer */}
+        {/* Sticky Navbar - Outside scrollable area */}
+        {activeMobileView === 'dashboard' && (
+          <Navbar
+            isVisible={true}
+            onProfileClick={() => setActiveMobileView('profile')}
+            isMobileOnly={true}
+          />
+        )}
+
+        {/* Main Content Layer - Scrollable */}
         <div className="flex-1 overflow-y-auto no-scrollbar relative">
           {activeMobileView === 'dashboard' && (
             <div className="flex flex-col">
-              <Navbar
-                isVisible={true}
-                onProfileClick={() => setActiveMobileView('profile')}
-                isMobileOnly={true}
-              />
               <HeroSection
                 activeMobileView={activeMobileView}
                 onViewChange={setActiveMobileView}

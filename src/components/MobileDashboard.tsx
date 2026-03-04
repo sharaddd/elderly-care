@@ -115,7 +115,7 @@ const MobileDashboard = ({
     };
 
     return (
-        <div className="w-full h-full flex flex-col mx-auto px-4 gap-4 pt-[128px] pb-32">
+        <div className="w-full h-full flex flex-col mx-auto px-4 gap-4 pt-4 pb-32">
 
             {/* Personalized Greeting - Scrolls up */}
             <div className="flex flex-col gap-1.5 px-1 mb-2 animate-in fade-in slide-in-from-top-4 duration-700">

@@ -188,7 +188,7 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
   ];
 
   return (
-    <nav className={`${isMobileOnly ? "absolute" : "fixed"} top-0 left-0 right-0 z-[50] bg-white/90 backdrop-blur-md border-b border-gray-100 ${isMobileOnly ? "" : "lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12"} pt-2 pb-2 transition-all duration-300 ${!isVisible ? (isMobileOnly ? "hidden" : "hidden lg:block") : "block"}`}>
+    <nav className={`${isMobileOnly ? "relative shrink-0" : "fixed"} ${isMobileOnly ? "" : "top-0 left-0 right-0"} z-[50] bg-white/90 backdrop-blur-md border-b border-gray-100 ${isMobileOnly ? "" : "lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12"} pt-2 pb-2 transition-all duration-300 ${!isVisible ? (isMobileOnly ? "hidden" : "hidden lg:block") : "block"}`}>
       <div className="container mx-auto px-4 flex items-start justify-between">
         {/* Left Side: Brand and Links/Location */}
         <div className="flex gap-12 w-full lg:w-auto">
