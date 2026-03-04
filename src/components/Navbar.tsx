@@ -87,7 +87,11 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
   );
 };
 
-const Navbar = () => {
+interface NavbarProps {
+  isVisible?: boolean;
+}
+
+const Navbar = ({ isVisible = true }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   const links = [
@@ -96,7 +100,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-4 pb-12">
+    <nav className={`absolute top-0 left-0 right-0 z-50 lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-4 pb-12 transition-opacity duration-300 ${!isVisible ? "hidden lg:block" : "block"}`}>
       <div className="container mx-auto px-6 flex items-start justify-between">
         {/* Left Side: Brand and Links/Location */}
         <div className="flex gap-12 w-full lg:w-auto">

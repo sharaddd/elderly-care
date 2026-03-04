@@ -1,4 +1,3 @@
-import { useState } from "react";
 import heroImage from "@/assets/hero-new.jpg";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
@@ -6,9 +5,12 @@ import CallbackDialog from "./CallbackDialog";
 import MobileDashboard from "./MobileDashboard";
 import MedicationSchedule from "./MedicationSchedule";
 
-const HeroSection = () => {
-  const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication'>('dashboard');
+interface HeroSectionProps {
+  activeMobileView: 'dashboard' | 'medication';
+  onViewChange: (view: 'dashboard' | 'medication') => void;
+}
 
+const HeroSection = ({ activeMobileView, onViewChange }: HeroSectionProps) => {
   return (
     <section id="home" className="relative min-h-[90vh] md:min-h-screen flex items-center pt-0  bg-white md:bg-transparent">
       {/* Background image (Hidden on Mobile) */}
@@ -19,13 +21,13 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/50 to-transparent z-0 hidden md:block" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 h-full flex items-center ">
+      <div className="container mx-auto px-0 md:px-6 relative z-10 h-full flex items-center ">
         {/* Mobile Views */}
         <div className="block md:hidden w-full pt-10">
           {activeMobileView === 'dashboard' ? (
-            <MobileDashboard onNavigateToMedication={() => setActiveMobileView('medication')} />
+            <MobileDashboard onNavigateToMedication={() => onViewChange('medication')} />
           ) : (
-            <MedicationSchedule onBack={() => setActiveMobileView('dashboard')} />
+            <MedicationSchedule onBack={() => onViewChange('dashboard')} />
           )}
         </div>
 

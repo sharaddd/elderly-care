@@ -77,6 +77,7 @@ export default function RootLayout() {
           allowsBackForwardNavigationGestures={true}
           pullToRefreshEnabled={true}
           onMessage={handleWebViewMessage}
+          hideKeyboardAccessoryView={true}
         />
       </View>
     </SafeAreaView>
