@@ -21,9 +21,26 @@ declare global {
 interface MobileDashboardProps {
     onNavigateToMedication?: () => void;
     onNavigateToInsurance?: () => void;
+    onNavigateToVitals?: () => void;
+    onNavigateToEssentials?: () => void;
+    onNavigateToConsult?: () => void;
+    onNavigateToDoctor?: () => void;
+    onNavigateToScanner?: () => void;
+    onNavigateToSOS?: () => void;
+    onNavigateToSafeZone?: () => void;
 }
 
-const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: MobileDashboardProps) => {
+const MobileDashboard = ({
+    onNavigateToMedication,
+    onNavigateToInsurance,
+    onNavigateToVitals,
+    onNavigateToEssentials,
+    onNavigateToConsult,
+    onNavigateToDoctor,
+    onNavigateToScanner,
+    onNavigateToSOS,
+    onNavigateToSafeZone
+}: MobileDashboardProps) => {
     const [isWalletOpen, setIsWalletOpen] = useState(false);
     const [isVitalsOpen, setIsVitalsOpen] = useState(false);
     const [isVideoConsultOpen, setIsVideoConsultOpen] = useState(false);
@@ -205,9 +222,8 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
                     <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-blue-100/30 rounded-full blur-2xl group-hover:bg-blue-200/40 transition-colors" />
                 </div>
 
-                {/* Card 2: Vitals Dashboard */}
                 <div
-                    onClick={() => setIsVitalsOpen(true)}
+                    onClick={onNavigateToVitals}
                     className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="flex justify-between items-start">
@@ -236,9 +252,8 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
                     <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
                 </div>
 
-                {/* Card 3: Video Consultation */}
                 <div
-                    onClick={() => setIsVideoConsultOpen(true)}
+                    onClick={onNavigateToConsult}
                     className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="bg-emerald-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-emerald-100/30">
@@ -256,9 +271,8 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
 
             {/* 2 Columns Grid */}
             <div className="grid grid-cols-2 gap-[10px]">
-                {/* Card 1: Daily Essentials */}
                 <div
-                    onClick={() => setIsDailyEssentialsOpen(true)}
+                    onClick={onNavigateToEssentials}
                     className="bg-white border border-gray-100 rounded-[22px] aspect-[4/3] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="flex justify-between items-start">
@@ -283,9 +297,8 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
                     <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-orange-50/40 rounded-full blur-xl" />
                 </div>
 
-                {/* Card 2: Critical Care */}
                 <div
-                    onClick={() => setIsFindDoctorOpen(true)}
+                    onClick={onNavigateToDoctor}
                     className="bg-white border border-gray-100 rounded-[22px] aspect-[4/3] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="flex justify-between items-start">
@@ -313,9 +326,8 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
 
             {/* 6 Grid Pills */}
             <div className="grid grid-cols-2 gap-[10px]">
-                {/* Prescription Scan - Redesigned Hero Pill */}
                 <button
-                    onClick={() => setIsScannerOpen(true)}
+                    onClick={onNavigateToScanner}
                     className="relative bg-white border border-indigo-100 rounded-[18px] h-[64px] flex items-center px-4 gap-3 shadow-sm hover:shadow-md transition-all active:scale-95 group overflow-hidden"
                 >
                     <div className="bg-indigo-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
@@ -333,7 +345,7 @@ const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: Mobi
                     <div className="absolute -right-4 -top-8 w-16 h-16 bg-indigo-50/40 rounded-full blur-2xl group-hover:bg-indigo-100 transition-colors" />
                 </button>
                 <button
-                    onClick={() => setIsSafeZoneOpen(true)}
+                    onClick={onNavigateToSafeZone}
                     className="relative bg-white border border-emerald-100 rounded-[18px] h-[64px] flex items-center px-4 gap-3 shadow-sm hover:shadow-md transition-all active:scale-95 group overflow-hidden"
                 >
                     <div className="bg-emerald-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:bg-emerald-600 transition-colors duration-300">

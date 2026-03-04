@@ -150,10 +150,8 @@ const InsuranceClaimsDialog = ({ open, onOpenChange, isPage }: InsuranceClaimsDi
 
     if (isPage) {
         return (
-            <div className="fixed inset-0 z-[60] bg-slate-50 w-full overflow-y-auto overflow-x-hidden md:max-w-none">
-                <div className="max-w-[400px] mx-auto min-h-screen bg-slate-50">
-                    {content}
-                </div>
+            <div className="absolute inset-0 z-[60] bg-slate-50 w-full overflow-y-auto overflow-x-hidden shadow-2xl">
+                {content}
             </div>
         );
     }

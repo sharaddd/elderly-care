@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 interface SafeZoneDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    isPage?: boolean;
 }
 
-const SafeZoneDialog = ({ open, onOpenChange }: SafeZoneDialogProps) => {
+const SafeZoneDialog = ({ open, onOpenChange, isPage = false }: SafeZoneDialogProps) => {
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
     useEffect(() => {
@@ -19,8 +20,8 @@ const SafeZoneDialog = ({ open, onOpenChange }: SafeZoneDialogProps) => {
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[400px] w-[92%] rounded-[32px] p-0 overflow-hidden border-none bg-slate-50 shadow-2xl [&>button:last-child]:hidden">
-                <div className="flex flex-col h-[85vh] relative">
+            <DialogContent className={`${isPage ? 'absolute inset-0 w-full h-full max-w-none rounded-none' : 'max-w-[400px] w-[92%] rounded-[32px] fixed inset-0'} p-0 overflow-hidden border-none bg-slate-50 shadow-2xl [&>button:last-child]:hidden z-[100]`}>
+                <div className={`flex flex-col ${isPage ? 'h-full' : 'h-[85vh]'} relative`}>
                     {/* Header */}
                     <div className="bg-white px-6 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
                         <button

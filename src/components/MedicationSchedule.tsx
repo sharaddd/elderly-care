@@ -170,7 +170,7 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
 
     return (
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <div className="fixed inset-0 bg-white z-[60] flex flex-col animate-in slide-in-from-right duration-300 overflow-hidden">
+            <div className="absolute inset-0 bg-white z-[60] flex flex-col animate-in slide-in-from-right duration-300 overflow-hidden">
                 {/* STICKY DASHBOARD HEADER */}
                 <div className="sticky top-0 bg-white border-b border-gray-200 z-50 shadow-sm">
                     {/* Navigation Bar */}

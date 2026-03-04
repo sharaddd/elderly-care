@@ -47,9 +47,10 @@ const SpecialityItem = ({ icon: Icon, title, description, color }: SpecialityIte
 interface FindDoctorDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    isPage?: boolean;
 }
 
-const FindDoctorDialog = ({ open, onOpenChange }: FindDoctorDialogProps) => {
+const FindDoctorDialog = ({ open, onOpenChange, isPage = false }: FindDoctorDialogProps) => {
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("Dwarka Sec 14");
 
@@ -73,7 +74,7 @@ const FindDoctorDialog = ({ open, onOpenChange }: FindDoctorDialogProps) => {
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full">
+            <DialogContent className={`w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col ${isPage ? 'absolute' : 'fixed'} inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full shadow-2xl`}>
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-20">
@@ -109,8 +110,8 @@ const FindDoctorDialog = ({ open, onOpenChange }: FindDoctorDialogProps) => {
                                                     setIsLocationOpen(false);
                                                 }}
                                                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[12px] font-bold transition-colors ${selectedLocation === loc
-                                                        ? 'bg-blue-50 text-blue-700'
-                                                        : 'text-gray-600 hover:bg-gray-50'
+                                                    ? 'bg-blue-50 text-blue-700'
+                                                    : 'text-gray-600 hover:bg-gray-50'
                                                     }`}
                                             >
                                                 {loc}
