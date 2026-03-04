@@ -10,34 +10,31 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 const Index = () => {
   const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile'>('dashboard');
   return (
-    <div className="min-h-screen bg-background relative pb-safe">
-      <Navbar
-        isVisible={activeMobileView === 'dashboard'}
-        onProfileClick={() => setActiveMobileView('profile')}
-      />
-      <HeroSection
-        activeMobileView={activeMobileView}
-        onViewChange={setActiveMobileView}
-      />
+    <div className="min-h-screen bg-[#222222] flex items-center justify-center p-0 md:p-4 overflow-hidden">
+      <div className="w-full max-w-[400px] h-full md:h-[852px] bg-background relative shadow-2xl md:rounded-[40px] overflow-hidden border-0 md:border-[8px] border-gray-900 flex flex-col">
+        <div className="flex-1 overflow-y-auto no-scrollbar pb-safe">
+          <Navbar
+            isVisible={activeMobileView === 'dashboard'}
+            onProfileClick={() => setActiveMobileView('profile')}
+          />
+          <HeroSection
+            activeMobileView={activeMobileView}
+            onViewChange={setActiveMobileView}
+          />
 
-      <div className="hidden md:block">
-        <ServicesSection />
-        <WhyUsSection />
-        <ContactSection />
-        <Footer />
+          <MobileBottomNav
+            activeTab={
+              activeMobileView === 'dashboard' ? 'home' :
+                activeMobileView === 'bookings' ? 'calendar' :
+                  activeMobileView === 'appointments' ? 'health' :
+                    'other'
+            }
+            onHomeClick={() => setActiveMobileView('dashboard')}
+            onCalendarClick={() => setActiveMobileView('bookings')}
+            onDoctorClick={() => setActiveMobileView('appointments')}
+          />
+        </div>
       </div>
-
-      <MobileBottomNav
-        activeTab={
-          activeMobileView === 'dashboard' ? 'home' :
-            activeMobileView === 'bookings' ? 'calendar' :
-              activeMobileView === 'appointments' ? 'health' :
-                'other'
-        }
-        onHomeClick={() => setActiveMobileView('dashboard')}
-        onCalendarClick={() => setActiveMobileView('bookings')}
-        onDoctorClick={() => setActiveMobileView('appointments')}
-      />
     </div>
   );
 };
