@@ -24,10 +24,21 @@ const VoiceAssistantDialog = ({ open, onOpenChange }: VoiceAssistantDialogProps)
         return () => clearInterval(interval);
     }, [open]);
 
+    if (!open) return null;
+
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[400px] w-[90%] rounded-[32px] border-none bg-white/90 backdrop-blur-xl p-0 overflow-hidden shadow-2xl">
-                <div className="relative p-8 flex flex-col items-center justify-center min-h-[320px]">
+        <div className="absolute inset-0 z-[100] flex flex-col items-center justify-end p-4 bg-black/40 animate-in fade-in duration-200">
+            {/* Click away layer to close */}
+            <div className="absolute inset-0" onClick={() => onOpenChange(false)} />
+
+            <div className="w-full max-w-[400px] mb-4 rounded-[32px] bg-white/90 backdrop-blur-xl p-0 overflow-hidden shadow-2xl relative animate-in slide-in-from-bottom-5 duration-300">
+                <button
+                    onClick={() => onOpenChange(false)}
+                    className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors z-20 cursor-pointer"
+                >
+                    <X className="h-5 w-5 text-gray-500" />
+                </button>
+                <div className="relative p-8 flex flex-col items-center justify-center min-h-[320px] pointer-events-auto">
                     {/* Close Button */}
 
 
@@ -65,8 +76,8 @@ const VoiceAssistantDialog = ({ open, onOpenChange }: VoiceAssistantDialogProps)
                     <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-blue-100/30 rounded-full blur-3xl -z-10" />
                     <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-100/30 rounded-full blur-3xl -z-10" />
                 </div>
-            </DialogContent>
-        </Dialog>
+            </div>
+        </div>
     );
 };
 
