@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet } from "lucide-react";
+import WalletDialog from "./WalletDialog";
 
 declare global {
     interface Window {
@@ -13,6 +15,8 @@ interface MobileDashboardProps {
 }
 
 const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
+    const [isWalletOpen, setIsWalletOpen] = useState(false);
+
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
         if (onNavigateToMedication) {
@@ -40,10 +44,16 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                         className="w-full bg-[#f4f4f4] border border-gray-200 rounded-[14px] h-[52px] pl-[46px] pr-4 text-gray-900 placeholder:text-gray-500 outline-none focus:bg-[#ebebeb] transition-all text-[15px] font-medium shadow-sm"
                     />
                 </div>
-                <button className="h-[52px] w-[52px] bg-white border border-gray-200 rounded-[14px] flex items-center justify-center text-gray-800 hover:bg-gray-50 transition-all shadow-sm">
-                    <Wallet className="h-[24px] w-[24px]" />
+                <button
+                    onClick={() => setIsWalletOpen(true)}
+                    className="h-[52px] w-[52px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 hover:bg-indigo-50 transition-all shadow-sm active:scale-95 group"
+                >
+                    <Wallet className="h-[24px] w-[24px] group-hover:scale-110 transition-transform" />
                 </button>
             </div>
+
+            {/* Wallet Dialog Integration */}
+            <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
 
             {/* Ongoing Appointment */}
             <div className="flex flex-col gap-2">
