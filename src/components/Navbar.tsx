@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Menu, X, MapPin, ChevronDown, Phone, User, Search, Target, AudioLines } from "lucide-react";
+import { Menu, X, MapPin, ChevronDown, Phone, User, Search, Target, AudioLines, Sparkles } from "lucide-react";
 import LogoIcon from "./LogoIcon";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CallbackDialog from "./CallbackDialog";
+
+import VoiceAssistantDialog from "./VoiceAssistantDialog";
 
 const LocationPicker = ({ className = "" }: { className?: string }) => {
   const [location, setLocation] = useState({ title: "Home", address: "Dwarka Sec-14, Delhi." });
@@ -93,6 +95,7 @@ interface NavbarProps {
 
 const Navbar = ({ isVisible = true }: NavbarProps) => {
   const [open, setOpen] = useState(false);
+  const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
 
   const links = [
     { label: "find nurses", href: "#nurses" },
@@ -130,12 +133,20 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
           <div className="lg:hidden flex items-center justify-between w-full pt-1">
             <LocationPicker className="bg-white px-2 py-2 shadow-sm w-auto" />
 
-            <div className="flex items-center gap-3 pr-1">
-              <button className="h-10 w-10 bg-white text-blue-600 shadow-sm flex items-center justify-center transition-colors">
-                <AudioLines className="h-5 w-5 stroke-[2.5]" />
+            <div className="flex items-center gap-2 pr-1">
+              <button
+                onClick={() => setIsVoiceAssistantOpen(true)}
+                className="h-[42px] w-[42px] bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-full shadow-md shadow-blue-200/50 flex items-center justify-center transition-all hover:opacity-95 active:scale-90 relative group"
+              >
+                <AudioLines className="h-[22px] w-[22px] stroke-[2.5]" />
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
+                </span>
               </button>
-              <button className="h-10 w-10 text-gray-900 flex items-center justify-center transition-colors">
-                <User className="h-7 w-7 stroke-[2]" />
+
+              <button className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 text-gray-900 rounded-full shadow-sm flex items-center justify-center transition-all hover:bg-gray-100 overflow-hidden group ml-1">
+                <User className="h-[24px] w-[24px] stroke-[1.8]" />
               </button>
             </div>
           </div>
@@ -174,6 +185,11 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
         </div>
       </div>
 
+      {/* Shared Components */}
+      <VoiceAssistantDialog
+        open={isVoiceAssistantOpen}
+        onOpenChange={setIsVoiceAssistantOpen}
+      />
     </nav>
   );
 };
