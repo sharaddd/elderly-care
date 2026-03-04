@@ -83,12 +83,13 @@ const EssentialItem = ({ icon: Icon, title, description, color, partner }: Essen
 interface DailyEssentialsDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    isPage?: boolean;
 }
 
-const DailyEssentialsDialog = ({ open, onOpenChange }: DailyEssentialsDialogProps) => {
+const DailyEssentialsDialog = ({ open, onOpenChange, isPage = false }: DailyEssentialsDialogProps) => {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full shadow-2xl">
+            <DialogContent className={`w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col ${isPage ? 'absolute' : 'fixed'} inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full shadow-2xl`}>
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-20">

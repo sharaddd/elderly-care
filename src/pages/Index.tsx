@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
 
 const Index = () => {
-  const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile'>('dashboard');
+  const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile' | 'vitals' | 'essentials' | 'consult' | 'doctor' | 'scanner' | 'sos' | 'safezone'>('dashboard');
   return (
     <div className="min-h-screen bg-[#222222] flex items-center justify-center p-0 md:p-4 overflow-hidden">
       <div className="w-full max-w-[400px] h-full md:h-[852px] bg-background relative shadow-2xl md:rounded-[40px] overflow-hidden border-0 md:border-[8px] border-gray-900 flex flex-col">

@@ -17,9 +17,10 @@ import {
 interface PrescriptionScannerProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    isPage?: boolean;
 }
 
-const PrescriptionScanner = ({ open, onOpenChange }: PrescriptionScannerProps) => {
+const PrescriptionScanner = ({ open, onOpenChange, isPage = false }: PrescriptionScannerProps) => {
     const [scanProgress, setScanProgress] = useState(0);
     const [isCapturing, setIsCapturing] = useState(false);
 
@@ -45,7 +46,7 @@ const PrescriptionScanner = ({ open, onOpenChange }: PrescriptionScannerProps) =
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-black flex flex-col inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[101] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom-full">
+            <DialogContent className={`w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-black flex flex-col ${isPage ? 'absolute' : 'fixed'} inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[101] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom-full`}>
 
                 {/* Camera Viewfinder Container */}
                 <div className="relative flex-1 flex flex-col items-center justify-center overflow-hidden">

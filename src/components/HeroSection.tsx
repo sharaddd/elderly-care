@@ -8,10 +8,19 @@ import InsuranceClaimsDialog from "./InsuranceClaimsDialog";
 import BookingsView from "./BookingsView";
 import AppointmentsView from "./AppointmentsView";
 import ProfileView from "./ProfileView";
+import VitalsDashboard from "./VitalsDashboard";
+import VideoConsultDialog from "./VideoConsultDialog";
+import DailyEssentialsDialog from "./DailyEssentialsDialog";
+import FindDoctorDialog from "./FindDoctorDialog";
+import PrescriptionScanner from "./PrescriptionScanner";
+import SOSDialog from "./SOSDialog";
+import SafeZoneDialog from "./SafeZoneDialog";
+
+type MobileViewType = 'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile' | 'vitals' | 'essentials' | 'consult' | 'doctor' | 'scanner' | 'sos' | 'safezone';
 
 interface HeroSectionProps {
-  activeMobileView: 'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile';
-  onViewChange: (view: 'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile') => void;
+  activeMobileView: MobileViewType;
+  onViewChange: (view: MobileViewType) => void;
   isMobileOnly?: boolean;
 }
 
@@ -33,6 +42,13 @@ const HeroSection = ({ activeMobileView, onViewChange, isMobileOnly = false }: H
             <MobileDashboard
               onNavigateToMedication={() => onViewChange('medication')}
               onNavigateToInsurance={() => onViewChange('insurance-claims')}
+              onNavigateToVitals={() => onViewChange('vitals')}
+              onNavigateToEssentials={() => onViewChange('essentials')}
+              onNavigateToConsult={() => onViewChange('consult')}
+              onNavigateToDoctor={() => onViewChange('doctor')}
+              onNavigateToScanner={() => onViewChange('scanner')}
+              onNavigateToSOS={() => onViewChange('sos')}
+              onNavigateToSafeZone={() => onViewChange('safezone')}
             />
           )}
           {activeMobileView === 'medication' && (
@@ -53,6 +69,27 @@ const HeroSection = ({ activeMobileView, onViewChange, isMobileOnly = false }: H
           )}
           {activeMobileView === 'profile' && (
             <ProfileView onBack={() => onViewChange('dashboard')} />
+          )}
+          {activeMobileView === 'vitals' && (
+            <VitalsDashboard open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'essentials' && (
+            <DailyEssentialsDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'consult' && (
+            <VideoConsultDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'doctor' && (
+            <FindDoctorDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'scanner' && (
+            <PrescriptionScanner open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'sos' && (
+            <SOSDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
+          )}
+          {activeMobileView === 'safezone' && (
+            <SafeZoneDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
           )}
         </div>
 
