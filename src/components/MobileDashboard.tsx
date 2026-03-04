@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
 import VideoConsultDialog from "./VideoConsultDialog";
 import DailyEssentialsDialog from "./DailyEssentialsDialog";
 import FindDoctorDialog from "./FindDoctorDialog";
+import PrescriptionScanner from "./PrescriptionScanner";
 
 declare global {
     interface Window {
@@ -24,6 +25,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const [isVideoConsultOpen, setIsVideoConsultOpen] = useState(false);
     const [isDailyEssentialsOpen, setIsDailyEssentialsOpen] = useState(false);
     const [isFindDoctorOpen, setIsFindDoctorOpen] = useState(false);
+    const [isScannerOpen, setIsScannerOpen] = useState(false);
 
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
@@ -66,6 +68,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
             <VideoConsultDialog open={isVideoConsultOpen} onOpenChange={setIsVideoConsultOpen} />
             <DailyEssentialsDialog open={isDailyEssentialsOpen} onOpenChange={setIsDailyEssentialsOpen} />
             <FindDoctorDialog open={isFindDoctorOpen} onOpenChange={setIsFindDoctorOpen} />
+            <PrescriptionScanner open={isScannerOpen} onOpenChange={setIsScannerOpen} />
 
             {/* Ongoing Appointment */}
             <div className="flex flex-col gap-2">
@@ -232,8 +235,24 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
 
             {/* 6 Grid Pills */}
             <div className="grid grid-cols-2 gap-[10px]">
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">prescription scan</span>
+                {/* Prescription Scan - Redesigned Hero Pill */}
+                <button
+                    onClick={() => setIsScannerOpen(true)}
+                    className="relative bg-white border border-indigo-100 rounded-[18px] h-[64px] flex items-center px-4 gap-3 shadow-sm hover:shadow-md transition-all active:scale-95 group overflow-hidden"
+                >
+                    <div className="bg-indigo-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
+                        <Scan className="h-5 w-5 text-indigo-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="flex flex-col items-start overflow-hidden">
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-gray-900 text-[12px] font-black tracking-tighter uppercase whitespace-nowrap">Prescription</span>
+                            <div className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                        </div>
+                        <span className="text-indigo-600 text-[10px] font-black uppercase tracking-widest leading-none">AI SCANNER</span>
+                    </div>
+
+                    {/* Decorative Background Layer */}
+                    <div className="absolute -right-4 -top-8 w-16 h-16 bg-indigo-50/40 rounded-full blur-2xl group-hover:bg-indigo-100 transition-colors" />
                 </button>
                 <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
                     <span className="text-gray-800 text-[14px] font-medium tracking-wide">community</span>

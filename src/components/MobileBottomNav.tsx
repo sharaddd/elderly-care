@@ -1,5 +1,6 @@
-import { Home, Calendar, Stethoscope, Phone } from "lucide-react";
+import { Home, Calendar, Stethoscope, ShieldAlert } from "lucide-react";
 import { useState } from "react";
+import SOSDialog from "./SOSDialog";
 
 interface MobileBottomNavProps {
     activeTab?: string;
@@ -8,6 +9,7 @@ interface MobileBottomNavProps {
 
 const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick }: MobileBottomNavProps) => {
     const [localActiveTab, setLocalActiveTab] = useState("home");
+    const [isSOSOpen, setIsSOSOpen] = useState(false);
     const activeTab = propActiveTab || localActiveTab;
     const setActiveTab = onHomeClick ? (tab: string) => { if (tab === 'home') onHomeClick(); setLocalActiveTab(tab); } : setLocalActiveTab;
 
@@ -40,14 +42,18 @@ const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick }: MobileBottom
                     </div>
                 </button>
 
-                {/* Call */}
+                {/* SOS */}
                 <button
-                    onClick={() => setActiveTab("call")}
-                    className={`flex flex-col items-center justify-center w-12 transition-colors ${activeTab === "call" ? "text-primary" : "text-gray-600 hover:text-gray-900"}`}
+                    onClick={() => setIsSOSOpen(true)}
+                    className="flex flex-col items-center justify-center w-12 transition-all active:scale-90"
                 >
-                    <Phone className="h-[28px] w-[28px] stroke-[2]" />
+                    <div className="h-[34px] w-[34px] rounded-full bg-red-600 flex items-center justify-center shadow-lg shadow-red-100 ring-4 ring-red-50">
+                        <span className="text-white font-[900] text-[11px] tracking-tighter uppercase leading-none">SOS</span>
+                    </div>
                 </button>
             </div>
+
+            <SOSDialog open={isSOSOpen} onOpenChange={setIsSOSOpen} />
         </div>
     );
 };
