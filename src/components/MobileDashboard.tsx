@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets } from "lucide-react";
 import WalletDialog from "./WalletDialog";
+import VitalsDashboard from "./VitalsDashboard";
 
 declare global {
     interface Window {
@@ -16,6 +17,7 @@ interface MobileDashboardProps {
 
 const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const [isWalletOpen, setIsWalletOpen] = useState(false);
+    const [isVitalsOpen, setIsVitalsOpen] = useState(false);
 
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
@@ -52,8 +54,9 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                 </button>
             </div>
 
-            {/* Wallet Dialog Integration */}
-            <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
+            {/* Dialog Integrations */}
+            <WalletDialog open={isWalletOpen} onOpenChange={isWalletOpen ? setIsWalletOpen : () => { }} />
+            <VitalsDashboard open={isVitalsOpen} onOpenChange={setIsVitalsOpen} />
 
             {/* Ongoing Appointment */}
             <div className="flex flex-col gap-2">
@@ -112,10 +115,35 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                     <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-blue-100/30 rounded-full blur-2xl group-hover:bg-blue-200/40 transition-colors" />
                 </div>
 
-                {/* Card 2 */}
-                <div className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/5] p-3.5 flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group">
-                    <Activity className="h-[22px] w-[22px] text-gray-700 mb-auto group-hover:scale-110 transition-transform" />
-                    <span className="text-gray-900 text-[13px] font-medium leading-snug tracking-wide">vitals<br />dashboard</span>
+                {/* Card 2: Vitals Dashboard */}
+                <div
+                    onClick={() => setIsVitalsOpen(true)}
+                    className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
+                >
+                    <div className="flex justify-between items-start">
+                        <div className="bg-indigo-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-indigo-100/30">
+                            <Activity className="h-[24px] w-[24px] text-indigo-600 stroke-[2.5]" />
+                        </div>
+                        <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse mt-2" />
+                    </div>
+
+                    <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-1.5">
+                                <Heart className="h-3 w-3 text-red-500 fill-red-500" />
+                                <span className="text-[14px] font-black text-gray-900 tracking-tight">87<span className="text-[10px] font-bold text-gray-400 ml-0.5">BPM</span></span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Droplets className="h-3 w-3 text-blue-500 fill-blue-500" />
+                                <span className="text-[14px] font-black text-gray-900 tracking-tight">98<span className="text-[10px] font-bold text-gray-400 ml-0.5">%</span></span>
+                            </div>
+                        </div>
+
+                        <span className="text-gray-900 text-[12.5px] font-bold leading-none tracking-tight">Vitals<br />Dashboard</span>
+                    </div>
+
+                    {/* Gradient overlay for premium feel */}
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
                 </div>
 
                 {/* Card 3 */}
