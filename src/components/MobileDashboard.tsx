@@ -14,13 +14,6 @@ interface MobileDashboardProps {
 
 const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const triggerMedicationNotification = () => {
-        // Send message to React Native wrapper if it exists
-        if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage('TRIGGER_MEDICATION_NOTIFICATION');
-        } else {
-            // alert('Simulation: Medication Due notification sent to device');
-        }
-
         // Navigate to the schedule view
         if (onNavigateToMedication) {
             onNavigateToMedication();
