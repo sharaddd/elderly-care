@@ -5,7 +5,7 @@ import { WebView } from 'react-native-webview';
 import * as Notifications from 'expo-notifications';
 
 // The URL of your web prototype. 
-const WEB_URL = 'http://192.168.1.180:8083';
+const WEB_URL = 'http://192.168.1.182:8084';
 
 // Configure notifications
 Notifications.setNotificationHandler({

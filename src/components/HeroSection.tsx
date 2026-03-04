@@ -1,10 +1,14 @@
+import { useState } from "react";
 import heroImage from "@/assets/hero-new.jpg";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import CallbackDialog from "./CallbackDialog";
 import MobileDashboard from "./MobileDashboard";
+import MedicationSchedule from "./MedicationSchedule";
 
 const HeroSection = () => {
+  const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication'>('dashboard');
+
   return (
     <section id="home" className="relative min-h-[90vh] md:min-h-screen flex items-center pt-0  bg-white md:bg-transparent">
       {/* Background image (Hidden on Mobile) */}
@@ -16,9 +20,13 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10 h-full flex items-center ">
-        {/* Mobile Dashboard */}
+        {/* Mobile Views */}
         <div className="block md:hidden w-full pt-10">
-          <MobileDashboard />
+          {activeMobileView === 'dashboard' ? (
+            <MobileDashboard onNavigateToMedication={() => setActiveMobileView('medication')} />
+          ) : (
+            <MedicationSchedule onBack={() => setActiveMobileView('dashboard')} />
+          )}
         </div>
 
         {/* Desktop Hero Content */}
