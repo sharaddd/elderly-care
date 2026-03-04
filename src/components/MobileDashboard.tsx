@@ -127,14 +127,7 @@ const MobileDashboard = ({
                 </div>
             </div>
 
-            {/* Dialog Integrations */}
-            <VitalsDashboard open={isVitalsOpen} onOpenChange={setIsVitalsOpen} />
-            <VideoConsultDialog open={isVideoConsultOpen} onOpenChange={setIsVideoConsultOpen} />
-            <DailyEssentialsDialog open={isDailyEssentialsOpen} onOpenChange={setIsDailyEssentialsOpen} />
-            <FindDoctorDialog open={isFindDoctorOpen} onOpenChange={setIsFindDoctorOpen} />
-            <PrescriptionScanner open={isScannerOpen} onOpenChange={setIsScannerOpen} />
-            <SOSDialog open={isSOSOpen} onOpenChange={setIsSOSOpen} />
-            <SafeZoneDialog open={isSafeZoneOpen} onOpenChange={setIsSafeZoneOpen} />
+            {/* Dialog Integrations - Removed because they are now managed globally in Index.tsx */}
 
             {/* Ongoing Bookings Stack */}
             <div className="flex flex-col gap-2 relative">

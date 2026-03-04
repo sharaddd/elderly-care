@@ -251,7 +251,7 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
                 </div>
 
                 {/* FLOATING ACTION BUTTON */}
-                <div className="fixed bottom-[100px] right-6 z-50">
+                <div className="absolute bottom-[100px] right-6 z-50">
                     <DialogTrigger asChild>
                         <button
                             className="h-[64px] w-[64px] bg-gray-900 rounded-full flex items-center justify-center text-white shadow-2xl shadow-gray-400 active:scale-90 transition-all border-4 border-white"

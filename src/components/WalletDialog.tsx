@@ -46,9 +46,11 @@ const WalletDialog = ({ open, onOpenChange }: WalletDialogProps) => {
         return true;
     });
 
+    if (!open) return null;
+
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full">
+        <>
+            <div className="w-full h-full max-w-none p-0 m-0 bg-[#fafafa] flex flex-col absolute inset-0 z-[100] duration-300 animate-in slide-in-from-right-full overflow-hidden">
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-20">
                     <button onClick={() => onOpenChange(false)} className="hover:bg-gray-100 p-2 rounded-full transition-colors active:scale-90">
@@ -146,63 +148,65 @@ const WalletDialog = ({ open, onOpenChange }: WalletDialogProps) => {
                         </div>
                     </div>
                 </div>
-            </DialogContent>
+            </div>
 
             {/* Add Money Sub-Dialog */}
-            <Dialog open={isAddMoneyOpen} onOpenChange={setIsAddMoneyOpen}>
-                <DialogContent className="sm:max-w-[380px] w-[90%] rounded-[32px] p-0 border-none bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 z-[110]">
-                    <div className="p-7 space-y-7">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-[20px] font-black text-gray-900 tracking-tight">Add Money</h2>
-                        </div>
-
-                        <div className="space-y-5">
-                            <div className="space-y-2.5">
-                                <Label htmlFor="amount" className="text-[12px] font-black text-gray-400 uppercase tracking-[0.1em] ml-1">Enter Amount (Rs.)</Label>
-                                <div className="relative group">
-                                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[20px] transition-colors group-focus-within:text-indigo-600">₹</span>
-                                    <Input
-                                        id="amount"
-                                        type="number"
-                                        placeholder="0.00"
-                                        className="bg-gray-50 border-gray-100 h-16 pl-12 text-[24px] font-black text-gray-900 placeholder:text-gray-200 rounded-2xl focus-visible:ring-indigo-600/10 focus-visible:ring-8 focus-visible:border-indigo-600 focus-visible:bg-white transition-all shadow-sm"
-                                        value={amount}
-                                        onChange={(e) => setAmount(e.target.value)}
-                                    />
+            {
+                isAddMoneyOpen && (
+                    <div className="absolute inset-0 top-0 left-0 w-full h-full z-[110] bg-black/40 flex items-center justify-center p-4">
+                        <div className="w-full max-w-[380px] rounded-[32px] p-0 border-none bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+                            <div className="p-7 space-y-7">
+                                <div className="flex items-center justify-between">
+                                    <h2 className="text-[20px] font-black text-gray-900 tracking-tight">Add Money</h2>
                                 </div>
-                            </div>
 
-                            <div className="flex flex-wrap gap-2.5">
-                                {["+100", "+500", "+1000"].map((add) => (
-                                    <button
-                                        key={add}
-                                        onClick={() => setAmount(prev => String((Number(prev) || 0) + Number(add.replace('+', ''))))}
-                                        className="flex-1 py-3 rounded-xl bg-gray-50 hover:bg-indigo-600 text-gray-600 hover:text-white text-[14px] font-bold border border-gray-100 hover:border-indigo-600 transition-all active:scale-95 shadow-sm"
-                                    >
-                                        {add}
-                                    </button>
-                                ))}
+                                <div className="space-y-5">
+                                    <div className="space-y-2.5">
+                                        <Label htmlFor="amount" className="text-[12px] font-black text-gray-400 uppercase tracking-[0.1em] ml-1">Enter Amount (Rs.)</Label>
+                                        <div className="relative group">
+                                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[20px] transition-colors group-focus-within:text-indigo-600">₹</span>
+                                            <Input
+                                                id="amount"
+                                                type="number"
+                                                placeholder="0.00"
+                                                className="bg-gray-50 border-gray-100 h-16 pl-12 text-[24px] font-black text-gray-900 placeholder:text-gray-200 rounded-2xl focus-visible:ring-indigo-600/10 focus-visible:ring-8 focus-visible:border-indigo-600 focus-visible:bg-white transition-all shadow-sm"
+                                                value={amount}
+                                                onChange={(e) => setAmount(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2.5">
+                                        {["+100", "+500", "+1000"].map((add) => (
+                                            <button
+                                                key={add}
+                                                onClick={() => setAmount(prev => String((Number(prev) || 0) + Number(add.replace('+', ''))))}
+                                                className="flex-1 py-3 rounded-xl bg-gray-50 hover:bg-indigo-600 text-gray-600 hover:text-white text-[14px] font-bold border border-gray-100 hover:border-indigo-600 transition-all active:scale-95 shadow-sm"
+                                            >
+                                                {add}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <Button
+                                    onClick={() => {
+                                        setIsAddMoneyOpen(false);
+                                        setAmount("");
+                                    }}
+                                    disabled={!amount || Number(amount) <= 0}
+                                    className="w-full h-15 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-[17px] shadow-xl shadow-indigo-200 transition-all active:scale-[0.98] disabled:opacity-40 disabled:grayscale"
+                                >
+                                    Proceed to Pay
+                                </Button>
+                                <p className="text-center text-[12px] font-medium text-gray-400 px-4">
+                                    Secure payment powered by ElderlyCare Bank. No hidden charges apply.
+                                </p>
                             </div>
                         </div>
-
-                        <Button
-                            onClick={() => {
-                                setIsAddMoneyOpen(false);
-                                setAmount("");
-                            }}
-                            disabled={!amount || Number(amount) <= 0}
-                            className="w-full h-15 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-[17px] shadow-xl shadow-indigo-200 transition-all active:scale-[0.98] disabled:opacity-40 disabled:grayscale"
-                        >
-                            Proceed to Pay
-                        </Button>
-
-                        <p className="text-center text-[12px] font-medium text-gray-400 px-4">
-                            Secure payment powered by ElderlyCare Bank. No hidden charges apply.
-                        </p>
                     </div>
-                </DialogContent>
-            </Dialog>
-        </Dialog>
+                )}
+        </>
     );
 };
 

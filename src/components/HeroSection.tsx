@@ -36,7 +36,7 @@ const HeroSection = ({ activeMobileView, onViewChange, isMobileOnly = false }: H
       </div>
 
       <div className={`container mx-auto px-0 ${isMobileOnly ? '' : 'md:px-6'} relative z-10 h-full flex items-center `}>
-        {/* Mobile Views */}
+        {/* Mobile Dashboard (Only when on dashboard view) */}
         <div className={`${isMobileOnly ? 'block' : 'block md:hidden'} w-full pt-10`}>
           {activeMobileView === 'dashboard' && (
             <MobileDashboard
@@ -50,46 +50,6 @@ const HeroSection = ({ activeMobileView, onViewChange, isMobileOnly = false }: H
               onNavigateToSOS={() => onViewChange('sos')}
               onNavigateToSafeZone={() => onViewChange('safezone')}
             />
-          )}
-          {activeMobileView === 'medication' && (
-            <MedicationSchedule onBack={() => onViewChange('dashboard')} />
-          )}
-          {activeMobileView === 'insurance-claims' && (
-            <InsuranceClaimsDialog
-              open={true}
-              onOpenChange={(open) => !open && onViewChange('dashboard')}
-              isPage={true}
-            />
-          )}
-          {activeMobileView === 'bookings' && (
-            <BookingsView onBack={() => onViewChange('dashboard')} />
-          )}
-          {activeMobileView === 'appointments' && (
-            <AppointmentsView onBack={() => onViewChange('dashboard')} />
-          )}
-          {activeMobileView === 'profile' && (
-            <ProfileView onBack={() => onViewChange('dashboard')} />
-          )}
-          {activeMobileView === 'vitals' && (
-            <VitalsDashboard open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'essentials' && (
-            <DailyEssentialsDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'consult' && (
-            <VideoConsultDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'doctor' && (
-            <FindDoctorDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'scanner' && (
-            <PrescriptionScanner open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'sos' && (
-            <SOSDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
-          )}
-          {activeMobileView === 'safezone' && (
-            <SafeZoneDialog open={true} onOpenChange={(open) => !open && onViewChange('dashboard')} isPage={true} />
           )}
         </div>
 
