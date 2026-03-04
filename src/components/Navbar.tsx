@@ -93,9 +93,10 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
 
 interface NavbarProps {
   isVisible?: boolean;
+  onProfileClick?: () => void;
 }
 
-const Navbar = ({ isVisible = true }: NavbarProps) => {
+const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
   const [isWalletOpen, setIsWalletOpen] = useState(false);
@@ -207,7 +208,10 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
                   </span>
                 </button>
 
-                <button className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-gray-100 active:scale-95 ml-1">
+                <button
+                  onClick={onProfileClick}
+                  className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-gray-100 active:scale-95 ml-1"
+                >
                   <User className="h-[22px] w-[22px] text-gray-600 stroke-[1.5]" />
                 </button>
               </div>
@@ -282,7 +286,10 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
             </div>
           </CallbackDialog>
 
-          <button className="p-1 hover:bg-white/10 rounded-full transition-colors">
+          <button
+            onClick={onProfileClick}
+            className="p-1 hover:bg-white/10 rounded-full transition-colors"
+          >
             <User className="h-6 w-6 text-white stroke-[1.5]" />
           </button>
         </div>

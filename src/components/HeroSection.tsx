@@ -4,10 +4,14 @@ import { Phone } from "lucide-react";
 import CallbackDialog from "./CallbackDialog";
 import MobileDashboard from "./MobileDashboard";
 import MedicationSchedule from "./MedicationSchedule";
+import InsuranceClaimsDialog from "./InsuranceClaimsDialog";
+import BookingsView from "./BookingsView";
+import AppointmentsView from "./AppointmentsView";
+import ProfileView from "./ProfileView";
 
 interface HeroSectionProps {
-  activeMobileView: 'dashboard' | 'medication';
-  onViewChange: (view: 'dashboard' | 'medication') => void;
+  activeMobileView: 'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile';
+  onViewChange: (view: 'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile') => void;
 }
 
 const HeroSection = ({ activeMobileView, onViewChange }: HeroSectionProps) => {
@@ -24,10 +28,30 @@ const HeroSection = ({ activeMobileView, onViewChange }: HeroSectionProps) => {
       <div className="container mx-auto px-0 md:px-6 relative z-10 h-full flex items-center ">
         {/* Mobile Views */}
         <div className="block md:hidden w-full pt-10">
-          {activeMobileView === 'dashboard' ? (
-            <MobileDashboard onNavigateToMedication={() => onViewChange('medication')} />
-          ) : (
+          {activeMobileView === 'dashboard' && (
+            <MobileDashboard
+              onNavigateToMedication={() => onViewChange('medication')}
+              onNavigateToInsurance={() => onViewChange('insurance-claims')}
+            />
+          )}
+          {activeMobileView === 'medication' && (
             <MedicationSchedule onBack={() => onViewChange('dashboard')} />
+          )}
+          {activeMobileView === 'insurance-claims' && (
+            <InsuranceClaimsDialog
+              open={true}
+              onOpenChange={(open) => !open && onViewChange('dashboard')}
+              isPage={true}
+            />
+          )}
+          {activeMobileView === 'bookings' && (
+            <BookingsView onBack={() => onViewChange('dashboard')} />
+          )}
+          {activeMobileView === 'appointments' && (
+            <AppointmentsView onBack={() => onViewChange('dashboard')} />
+          )}
+          {activeMobileView === 'profile' && (
+            <ProfileView onBack={() => onViewChange('dashboard')} />
           )}
         </div>
 
