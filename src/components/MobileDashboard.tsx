@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 
 declare global {
@@ -46,9 +46,9 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                 </div>
                 <button
                     onClick={() => setIsWalletOpen(true)}
-                    className="h-[52px] w-[52px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 hover:bg-indigo-50 transition-all shadow-sm active:scale-95 group"
+                    className="h-[52px] w-[52px] bg-gradient-to-tr from-indigo-50 to-white border border-indigo-100 rounded-[14px] flex items-center justify-center text-indigo-600 hover:bg-white transition-all shadow-md shadow-indigo-100/50 active:scale-95 group ml-1"
                 >
-                    <Wallet className="h-[24px] w-[24px] group-hover:scale-110 transition-transform" />
+                    <WalletMinimal className="h-7 w-7 group-hover:scale-110 transition-transform stroke-[2]" />
                 </button>
             </div>
 
