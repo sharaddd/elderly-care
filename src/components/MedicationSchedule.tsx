@@ -123,7 +123,9 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
 
             {/* FOOTER BAR */}
             <div className="bg-[#d9d9d9] border-t border-gray-400 h-[90px] px-10 flex items-center justify-between pb-safe">
-                <Home className="h-[38px] w-[38px] text-gray-900 stroke-[2]" />
+                <button onClick={onBack} className="flex items-center justify-center">
+                    <Home className="h-[38px] w-[38px] text-gray-900 stroke-[2]" />
+                </button>
                 <CalendarIcon className="h-[38px] w-[38px] text-gray-900 stroke-[2]" />
                 <TestTube2 className="h-[38px] w-[38px] text-gray-900 stroke-[2]" />
                 <Phone className="h-[38px] w-[38px] text-gray-900 stroke-[2]" />
