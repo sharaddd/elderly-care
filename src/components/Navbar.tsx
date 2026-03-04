@@ -318,13 +318,14 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
             </button>
           </div>
         </div>
-      </div>
-    </nav >
-    <VoiceAssistantDialog
+      </nav>
+
+      {/* Shared Components */}
+      <VoiceAssistantDialog
         open={isVoiceAssistantOpen}
         onOpenChange={setIsVoiceAssistantOpen}
-    />
-    <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
+      />
+      <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
     </>
   );
 };
