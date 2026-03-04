@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Menu, X, MapPin, ChevronDown, Phone, User, Search, Target, AudioLines, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, MapPin, ChevronDown, Phone, User, Search, Target, AudioLines, Sparkles, WalletMinimal } from "lucide-react";
 import LogoIcon from "./LogoIcon";
+import WalletDialog from "./WalletDialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,18 +31,19 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <div className={`cursor-pointer group flex flex-col items-start ${className}`}>
-          <div className="flex items-center gap-1.5 md:gap-1.5">
-            <MapPin className="h-[18px] w-[18px] text-gray-800 md:text-white" />
-            <span className="text-[14px] md:text-[15px] font-medium text-gray-900 md:text-white tracking-wide truncate max-w-[150px]">
-              <span className="md:hidden">{location.address.replace(',', '').replace('.', '')}</span>
-              <span className="hidden md:inline">{location.title}</span>
-            </span>
-            <ChevronDown className={`h-4 w-4 text-gray-800 md:text-white transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <div className={`cursor-pointer group flex items-center gap-3 p-1.5 px-3 rounded-[14px] bg-white border border-gray-100 shadow-sm active:scale-95 transition-all outline-none ${className}`}>
+          <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+            <MapPin className="h-4 w-4" />
           </div>
-          <span className="hidden md:block text-[12px] md:text-white/85 font-medium truncate lg:max-w-[200px]">
-            {location.address}
-          </span>
+          <div className="flex flex-col items-start leading-tight">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Delivery to</span>
+            <div className="flex items-center gap-1">
+              <span className="text-[14px] font-black text-gray-900 tracking-tight truncate max-w-[120px]">
+                {location.address.split(',')[0]}
+              </span>
+              <ChevronDown className={`h-3 w-3 text-gray-400 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+            </div>
+          </div>
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-[320px] p-0 overflow-hidden rounded-2xl border-gray-100 shadow-2xl" align="start">
@@ -96,6 +98,65 @@ interface NavbarProps {
 const Navbar = ({ isVisible = true }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
+  const [weatherData, setWeatherData] = useState({
+    temp: 22,
+    condition: "Sunny",
+    aqi: 42,
+    date: ""
+  });
+
+  useEffect(() => {
+    // Set dynamic date
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+    let formattedDate = now.toLocaleDateString('en-US', options);
+
+    // Add ordinal suffix (st, nd, rd, th)
+    const day = now.getDate();
+    let suffix = "th";
+    if (day === 1 || day === 21 || day === 31) suffix = "st";
+    else if (day === 2 || day === 22) suffix = "nd";
+    else if (day === 3 || day === 23) suffix = "rd";
+
+    formattedDate = formattedDate.replace(day.toString(), `${day}${suffix}`);
+    setWeatherData(prev => ({ ...prev, date: formattedDate }));
+
+    // Fetch Weather & AQI
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          // Fetch Weather
+          const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`);
+          const weatherJson = await weatherRes.json();
+
+          // Simple weather code mapping
+          const code = weatherJson.current.weather_code;
+          let condition = "Clear";
+          if (code >= 1 && code <= 3) condition = "Cloudy";
+          else if (code >= 45 && code <= 48) condition = "Foggy";
+          else if (code >= 51 && code <= 67) condition = "Raining";
+          else if (code >= 71 && code <= 77) condition = "Snowing";
+          else if (code >= 80 && code <= 82) condition = "Showers";
+          else if (code >= 95) condition = "Stormy";
+
+          // Fetch AQI
+          const aqiRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi`);
+          const aqiJson = await aqiRes.json();
+
+          setWeatherData(prev => ({
+            ...prev,
+            temp: Math.round(weatherJson.current.temperature_2m),
+            condition: condition,
+            aqi: aqiJson.current.us_aqi
+          }));
+        } catch (error) {
+          console.error("Error fetching weather:", error);
+        }
+      });
+    }
+  }, []);
 
   const links = [
     { label: "find nurses", href: "#nurses" },
@@ -103,8 +164,8 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
   ];
 
   return (
-    <nav className={`absolute top-0 left-0 right-0 z-50 lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-4 pb-12 transition-opacity duration-300 ${!isVisible ? "hidden lg:block" : "block"}`}>
-      <div className="container mx-auto px-6 flex items-start justify-between">
+    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12 transition-all duration-300 ${!isVisible ? "hidden lg:block" : "block"}`}>
+      <div className="container mx-auto px-4 flex items-start justify-between">
         {/* Left Side: Brand and Links/Location */}
         <div className="flex gap-12 w-full lg:w-auto">
           {/* --- DESKTOP LOGO AND LINKS --- */}
@@ -130,23 +191,65 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
           </div>
 
           {/* --- MOBILE WIREFRAME HEADER --- */}
-          <div className="lg:hidden flex items-center justify-between w-full pt-1">
-            <LocationPicker className="bg-white px-2 py-2 shadow-sm w-auto" />
+          <div className="lg:hidden flex flex-col w-full">
+            <div className="flex items-center justify-between w-full pt-1 -ml-4">
+              <LocationPicker className="border-none shadow-none bg-transparent p-0" />
 
-            <div className="flex items-center gap-2 pr-1">
+              <div className="flex items-center gap-2 -mr-4">
+                <button
+                  onClick={() => setIsVoiceAssistantOpen(true)}
+                  className="h-[42px] w-[42px] bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-full shadow-md shadow-blue-200/50 flex items-center justify-center transition-all hover:opacity-95 active:scale-90 relative group"
+                >
+                  <AudioLines className="h-[22px] w-[22px] stroke-[2.5]" />
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
+                  </span>
+                </button>
+
+                <button className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-gray-100 active:scale-95 ml-1">
+                  <User className="h-[22px] w-[22px] text-gray-600 stroke-[1.5]" />
+                </button>
+              </div>
+            </div>
+
+            {/* Static Weather & Date Bar */}
+            <div className="flex items-center gap-2 text-[11px] font-[900] text-gray-400 uppercase tracking-widest whitespace-nowrap px-2 pb-1 mt-1 border-t border-gray-100 pt-2 animate-in fade-in slide-in-from-top-1 duration-500">
+              <span>{weatherData.date || "Detecting Date..."}</span>
+              <div className="h-1 w-1 rounded-full bg-gray-300" />
+
               <button
-                onClick={() => setIsVoiceAssistantOpen(true)}
-                className="h-[42px] w-[42px] bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-full shadow-md shadow-blue-200/50 flex items-center justify-center transition-all hover:opacity-95 active:scale-90 relative group"
+                onClick={() => window.open('https://weather.com', '_blank')}
+                className="flex items-center gap-1 hover:text-orange-600 transition-colors active:scale-95 transition-transform"
               >
-                <AudioLines className="h-[22px] w-[22px] stroke-[2.5]" />
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
-                </span>
+                <span className="text-orange-500/80">{weatherData.temp}°C {weatherData.condition}</span>
               </button>
 
-              <button className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 text-gray-900 rounded-full shadow-sm flex items-center justify-center transition-all hover:bg-gray-100 overflow-hidden group ml-1">
-                <User className="h-[24px] w-[24px] stroke-[1.8]" />
+              <div className="h-1 w-1 rounded-full bg-gray-300" />
+
+              <button
+                onClick={() => window.open('https://weather.com', '_blank')}
+                className="flex items-center gap-1 hover:text-emerald-600 transition-colors active:scale-95 transition-transform"
+              >
+                <span className="text-emerald-500/80">AQI {weatherData.aqi}</span>
+              </button>
+            </div>
+
+            {/* Static Search Bar & Wallet Row */}
+            <div className="flex items-center gap-3 px-1 pb-2 mt-2">
+              <div className="relative flex-1 group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Search medicines, doctors or care..."
+                  className="w-full bg-gray-50/80 border border-gray-100 rounded-[14px] h-[48px] pl-[42px] pr-4 text-gray-900 placeholder:text-gray-400 outline-none focus:ring-4 focus:ring-indigo-50/50 focus:border-indigo-200 transition-all text-[13px] font-semibold"
+                />
+              </div>
+              <button
+                onClick={() => setIsWalletOpen(true)}
+                className="h-[48px] w-[48px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 active:scale-95 transition-all shadow-sm"
+              >
+                <WalletMinimal className="h-5 w-5 stroke-[2]" />
               </button>
             </div>
           </div>
@@ -190,6 +293,7 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
         open={isVoiceAssistantOpen}
         onOpenChange={setIsVoiceAssistantOpen}
       />
+      <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
     </nav>
   );
 };

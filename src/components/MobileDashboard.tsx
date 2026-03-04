@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan } from "lucide-react";
+import { useState, useRef } from "react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan, ShieldCheck } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
 import VideoConsultDialog from "./VideoConsultDialog";
 import DailyEssentialsDialog from "./DailyEssentialsDialog";
 import FindDoctorDialog from "./FindDoctorDialog";
 import PrescriptionScanner from "./PrescriptionScanner";
+import SOSDialog from "./SOSDialog";
+import SafeZoneDialog from "./SafeZoneDialog";
 
 declare global {
     interface Window {
@@ -26,6 +28,57 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const [isDailyEssentialsOpen, setIsDailyEssentialsOpen] = useState(false);
     const [isFindDoctorOpen, setIsFindDoctorOpen] = useState(false);
     const [isScannerOpen, setIsScannerOpen] = useState(false);
+    const [isSOSOpen, setIsSOSOpen] = useState(false);
+    const [isSafeZoneOpen, setIsSafeZoneOpen] = useState(false);
+
+    const [currentBookingIndex, setCurrentBookingIndex] = useState(0);
+
+    const bookings = [
+        {
+            id: 1,
+            title: "Mr. Rahul Sharma is at your home..",
+            subtitle: "Physiotherapy session",
+            partner: "Wellness Co",
+            color: "#0ea5e9",
+            badge: "everyday needs"
+        },
+        {
+            id: 2,
+            title: "Order arriving in 8 mins",
+            subtitle: "Daily essentials & groceries",
+            partner: "Blinkit",
+            color: "#facc15",
+            badge: "delivery"
+        }
+    ];
+
+    const nextBooking = () => setCurrentBookingIndex((prev) => (prev + 1) % bookings.length);
+    const prevBooking = () => setCurrentBookingIndex((prev) => (prev - 1 + bookings.length) % bookings.length);
+
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+        const distance = touchStartX.current - touchEndX.current;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) nextBooking();
+        if (isRightSwipe) prevBooking();
+
+        // Reset
+        touchStartX.current = 0;
+        touchEndX.current = 0;
+    };
 
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
@@ -43,54 +96,83 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     };
 
     return (
-        <div className="w-full h-full flex flex-col mx-auto px-4 gap-[22px] pt-24 pb-32">
-            {/* Search Bar */}
-            <div className="flex items-center gap-3">
-                <div className="relative flex-1">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
-                    <input
-                        type="text"
-                        placeholder="Search your needs.."
-                        className="w-full bg-[#f4f4f4] border border-gray-200 rounded-[14px] h-[52px] pl-[46px] pr-4 text-gray-900 placeholder:text-gray-500 outline-none focus:bg-[#ebebeb] transition-all text-[15px] font-medium shadow-sm"
-                    />
+        <div className="w-full h-full flex flex-col mx-auto px-4 gap-4 pt-[128px] pb-32">
+
+            {/* Personalized Greeting - Scrolls up */}
+            <div className="flex flex-col gap-1.5 px-1 mb-2 animate-in fade-in slide-in-from-top-4 duration-700">
+                <div className="flex items-center gap-2">
+                    <h1 className="text-[26px] font-black text-gray-900 tracking-tight leading-tight">
+                        Good Evening, <br />
+                        <span className="text-gray-900/40">Mr. Sharma</span>
+                    </h1>
                 </div>
-                <button
-                    onClick={() => setIsWalletOpen(true)}
-                    className="h-[52px] w-[52px] bg-gradient-to-tr from-indigo-50 to-white border border-indigo-100 rounded-[14px] flex items-center justify-center text-indigo-600 hover:bg-white transition-all shadow-md shadow-indigo-100/50 active:scale-95 group ml-1"
-                >
-                    <WalletMinimal className="h-7 w-7 group-hover:scale-110 transition-transform stroke-[2]" />
-                </button>
             </div>
 
             {/* Dialog Integrations */}
-            <WalletDialog open={isWalletOpen} onOpenChange={isWalletOpen ? setIsWalletOpen : () => { }} />
             <VitalsDashboard open={isVitalsOpen} onOpenChange={setIsVitalsOpen} />
             <VideoConsultDialog open={isVideoConsultOpen} onOpenChange={setIsVideoConsultOpen} />
             <DailyEssentialsDialog open={isDailyEssentialsOpen} onOpenChange={setIsDailyEssentialsOpen} />
             <FindDoctorDialog open={isFindDoctorOpen} onOpenChange={setIsFindDoctorOpen} />
             <PrescriptionScanner open={isScannerOpen} onOpenChange={setIsScannerOpen} />
+            <SOSDialog open={isSOSOpen} onOpenChange={setIsSOSOpen} />
+            <SafeZoneDialog open={isSafeZoneOpen} onOpenChange={setIsSafeZoneOpen} />
 
-            {/* Ongoing Appointment */}
-            <div className="flex flex-col gap-2">
-                <span className="text-gray-700 text-[13px] font-medium pl-1 tracking-wide">ongoing appointment</span>
-                <div className="bg-[#f2f2f2] border border-gray-200 rounded-[20px] p-[18px] flex justify-between items-center shadow-sm">
-                    <div className="flex flex-col gap-3">
-                        <p className="text-gray-900 text-[15px] font-semibold tracking-wide leading-snug max-w-[200px]">
-                            Mr Rahul Deshpande is at your home..
-                        </p>
-                        <div>
-                            <span className="bg-white border border-gray-200 text-gray-900 text-[11px] font-bold px-[10px] py-[6px] rounded-[8px] shadow-sm tracking-wide">
-                                everyday needs
-                            </span>
-                        </div>
+            {/* Ongoing Bookings Stack */}
+            <div className="flex flex-col gap-2 relative">
+                <div className="flex items-center justify-between px-1">
+                    <span className="text-gray-700 text-[13px] font-bold uppercase tracking-wider">ongoing bookings</span>
+                    <div className="flex gap-1">
+                        {bookings.map((_, i) => (
+                            <div key={i} className={`h-1 w-3 rounded-full transition-all ${i === currentBookingIndex ? "bg-indigo-600 w-6" : "bg-gray-200"}`} />
+                        ))}
                     </div>
+                </div>
 
-                    <div className="flex flex-col items-center gap-[6px] cursor-pointer hover:opacity-80 transition-opacity">
-                        <div className="h-[52px] w-[52px] rounded-full border-[2.5px] border-gray-900 flex items-center justify-center">
-                            <span className="text-gray-900 font-bold text-[18px]">SOS</span>
-                        </div>
-                        <span className="text-gray-800 text-[10px] font-medium tracking-wide">need help?</span>
-                    </div>
+                <div
+                    className="relative h-[120px]"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
+                    {bookings.map((booking, index) => {
+                        const isCurrent = index === currentBookingIndex;
+                        const isNext = index === (currentBookingIndex + 1) % bookings.length;
+                        const isPrev = index === (currentBookingIndex - 1 + bookings.length) % bookings.length;
+
+                        return (
+                            <div
+                                key={booking.id}
+                                onClick={nextBooking}
+                                className={`absolute inset-0 bg-white border border-gray-100 rounded-[24px] p-5 flex justify-between items-center shadow-sm transition-all duration-500 cursor-pointer ${isCurrent ? "translate-x-0 translate-y-0 opacity-100 z-20 scale-100" :
+                                    isNext ? "translate-x-3 translate-y-3 opacity-40 z-10 scale-[0.95] rotate-1" :
+                                        isPrev ? "-translate-x-3 -translate-y-3 opacity-0 z-0 scale-[0.95] -rotate-1" :
+                                            "opacity-0 pointer-events-none"
+                                    }`}
+                            >
+                                <div className="flex flex-col gap-2 flex-1">
+                                    <h3 className="text-gray-900 text-[16px] font-black tracking-tight leading-tight max-w-[180px]">
+                                        {booking.title}
+                                    </h3>
+                                    <div className="flex items-center gap-2">
+                                        <div className="px-2 py-0.5 rounded-md border border-gray-100 bg-gray-50/50">
+                                            <span className="text-[10px] font-black text-gray-400 tracking-tighter uppercase">{booking.subtitle}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: booking.color }} />
+                                            <span className="text-[11px] font-black uppercase tracking-tighter" style={{ color: booking.color }}>{booking.partner}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col items-center gap-[4px] shrink-0 active:scale-95 transition-transform" onClick={(e) => { e.stopPropagation(); setIsSOSOpen(true); }}>
+                                    <div className="h-[48px] w-[48px] rounded-full border-[2px] border-gray-900 flex items-center justify-center shadow-sm">
+                                        <span className="text-gray-900 font-black text-[15px]">SOS</span>
+                                    </div>
+                                    <span className="text-gray-400 text-[9px] font-black uppercase tracking-widest leading-none">help</span>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -115,11 +197,8 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                     </div>
 
                     <div className="flex flex-col gap-0.5 mt-2">
-                        <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">
-                            Today's
-                        </span>
-                        <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">
-                            Medication
+                        <span className="text-gray-900 text-[12.5px] font-black leading-tight tracking-tighter uppercase">
+                            TODAY'S<br />MEDICATION
                         </span>
                     </div>
 
@@ -151,7 +230,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                             </div>
                         </div>
 
-                        <span className="text-gray-900 text-[12.5px] font-bold leading-none tracking-tight">Vitals<br />Dashboard</span>
+                        <span className="text-gray-900 text-[12px] font-black leading-tight tracking-tighter uppercase">VITALS<br />DASHBOARD</span>
                     </div>
 
                     {/* Gradient overlay for premium feel */}
@@ -167,7 +246,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                         <Video className="h-[24px] w-[24px] text-emerald-600 stroke-[2.5]" />
                     </div>
 
-                    <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">Video<br />Consultation</span>
+                    <span className="text-gray-900 text-[12px] font-black text-left leading-tight tracking-tighter uppercase">VIDEO<br />CONSULTATION</span>
 
                     {/* Gradient overlay for premium feel */}
                     <div className="absolute top-0 right-0 w-12 h-12 bg-emerald-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
@@ -248,14 +327,29 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                             <span className="text-gray-900 text-[12px] font-black tracking-tighter uppercase whitespace-nowrap">Prescription</span>
                             <div className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
                         </div>
-                        <span className="text-indigo-600 text-[10px] font-black uppercase tracking-widest leading-none">AI SCANNER</span>
+                        <span className="text-indigo-600 text-[10px] font-black uppercase tracking-widest leading-none">SCANNER</span>
                     </div>
 
                     {/* Decorative Background Layer */}
                     <div className="absolute -right-4 -top-8 w-16 h-16 bg-indigo-50/40 rounded-full blur-2xl group-hover:bg-indigo-100 transition-colors" />
                 </button>
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">community</span>
+                <button
+                    onClick={() => setIsSafeZoneOpen(true)}
+                    className="relative bg-white border border-emerald-100 rounded-[18px] h-[64px] flex items-center px-4 gap-3 shadow-sm hover:shadow-md transition-all active:scale-95 group overflow-hidden"
+                >
+                    <div className="bg-emerald-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:bg-emerald-600 transition-colors duration-300">
+                        <ShieldCheck className="h-5 w-5 text-emerald-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="flex flex-col items-start overflow-hidden">
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-gray-900 text-[12px] font-black tracking-tighter uppercase whitespace-nowrap">Safe Zone</span>
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        </div>
+                        <span className="text-emerald-600 text-[10px] font-black uppercase tracking-widest leading-none">FAMILY GUARD</span>
+                    </div>
+
+                    {/* Decorative Background Layer */}
+                    <div className="absolute -right-4 -top-8 w-16 h-16 bg-emerald-50/40 rounded-full blur-2xl group-hover:bg-emerald-100 transition-colors" />
                 </button>
                 <button
                     onClick={triggerAppointmentNotification}
@@ -270,7 +364,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                     <span className="text-gray-800 text-[14px] font-medium tracking-wide">meal planning</span>
                 </button>
                 <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">safe zone</span>
+                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">community</span>
                 </button>
             </div>
         </div>
