@@ -116,9 +116,10 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
 interface NavbarProps {
   isVisible?: boolean;
   onProfileClick?: () => void;
+  isMobileOnly?: boolean;
 }
 
-const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
+const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
   const [isWalletOpen, setIsWalletOpen] = useState(false);
@@ -187,12 +188,12 @@ const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12 transition-all duration-300 ${!isVisible ? "hidden lg:block" : "block"}`}>
+    <nav className={`${isMobileOnly ? "absolute" : "fixed"} top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 ${isMobileOnly ? "" : "lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12"} pt-2 pb-2 transition-all duration-300 ${!isVisible ? (isMobileOnly ? "hidden" : "hidden lg:block") : "block"}`}>
       <div className="container mx-auto px-4 flex items-start justify-between">
         {/* Left Side: Brand and Links/Location */}
         <div className="flex gap-12 w-full lg:w-auto">
           {/* --- DESKTOP LOGO AND LINKS --- */}
-          <div className="hidden lg:flex items-center gap-12">
+          <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-12`}>
             <a href="#home" className="flex items-center gap-3">
               <LogoIcon className="h-10 w-10" />
               <span className="font-sans text-[22px] font-bold text-white tracking-tight leading-none">
@@ -201,7 +202,7 @@ const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
             </a>
           </div>
 
-          <div className="hidden lg:flex items-center gap-10">
+          <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10`}>
             {links.map((l) => (
               <a
                 key={l.href}
@@ -214,7 +215,7 @@ const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
           </div>
 
           {/* --- MOBILE WIREFRAME HEADER --- */}
-          <div className="lg:hidden flex flex-col w-full">
+          <div className={`${isMobileOnly ? "flex" : "lg:hidden flex"} flex-col w-full`}>
             <div className="flex items-center justify-between w-full pt-1 -ml-4">
               <LocationPicker className="border-none shadow-none bg-transparent p-0" />
 
@@ -281,7 +282,7 @@ const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center gap-10">
+        <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10`}>
           {links.map((l) => (
             <a
               key={l.href}
@@ -295,7 +296,7 @@ const Navbar = ({ isVisible = true, onProfileClick }: NavbarProps) => {
       </div>
 
       {/* Right Side: Location (Desktop) and Actions */}
-      <div className="hidden lg:flex items-center gap-10 mt-1">
+      <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10 mt-1`}>
         <LocationPicker />
 
         <div className="flex items-center gap-8">

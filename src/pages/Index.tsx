@@ -16,10 +16,12 @@ const Index = () => {
           <Navbar
             isVisible={activeMobileView === 'dashboard'}
             onProfileClick={() => setActiveMobileView('profile')}
+            isMobileOnly={true}
           />
           <HeroSection
             activeMobileView={activeMobileView}
             onViewChange={setActiveMobileView}
+            isMobileOnly={true}
           />
 
           <MobileBottomNav
@@ -32,6 +34,7 @@ const Index = () => {
             onHomeClick={() => setActiveMobileView('dashboard')}
             onCalendarClick={() => setActiveMobileView('bookings')}
             onDoctorClick={() => setActiveMobileView('appointments')}
+            isMobileOnly={true}
           />
         </div>
       </div>

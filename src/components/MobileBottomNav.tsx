@@ -7,9 +7,10 @@ interface MobileBottomNavProps {
     onHomeClick?: () => void;
     onCalendarClick?: () => void;
     onDoctorClick?: () => void;
+    isMobileOnly?: boolean;
 }
 
-const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick, onCalendarClick, onDoctorClick }: MobileBottomNavProps) => {
+const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick, onCalendarClick, onDoctorClick, isMobileOnly = false }: MobileBottomNavProps) => {
     const [localActiveTab, setLocalActiveTab] = useState("home");
     const [isSOSOpen, setIsSOSOpen] = useState(false);
     const activeTab = propActiveTab || localActiveTab;
@@ -26,7 +27,7 @@ const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick, onCalendarClic
     };
 
     return (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md pb-safe pt-2 px-6 h-[80px]">
+        <div className={`${isMobileOnly ? "" : "md:hidden"} ${isMobileOnly ? "absolute" : "fixed"} bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md pb-safe pt-2 px-6 h-[80px]`}>
             <div className="flex justify-between items-center h-full pb-4">
                 {/* Home */}
                 <button
