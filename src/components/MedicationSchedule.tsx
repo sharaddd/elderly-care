@@ -308,16 +308,6 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
                         </Button>
                     </DialogFooter>
                 </DialogContent>
-
-                {/* FOOTER BAR */}
-                <div className="bg-[#d9d9d9] border-t border-gray-400 h-[80px] px-10 flex items-center justify-between pb-safe">
-                    <button onClick={onBack} className="flex items-center justify-center">
-                        <Home className="h-[30px] w-[30px] text-gray-900 stroke-[2.2]" />
-                    </button>
-                    <CalendarIcon className="h-[30px] w-[30px] text-gray-900 stroke-[2.2]" />
-                    <TestTube2 className="h-[30px] w-[30px] text-gray-900 stroke-[2.2]" />
-                    <Phone className="h-[30px] w-[30px] text-gray-900 stroke-[2.2]" />
-                </div>
             </div>
         </Dialog>
     );
