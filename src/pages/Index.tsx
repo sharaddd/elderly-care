@@ -20,9 +20,11 @@ import PrescriptionScanner from "@/components/PrescriptionScanner";
 import SOSDialog from "@/components/SOSDialog";
 import SafeZoneDialog from "@/components/SafeZoneDialog";
 import MobileDashboard from "@/components/MobileDashboard";
+import WalletDialog from "@/components/WalletDialog";
 
 const Index = () => {
   const [activeMobileView, setActiveMobileView] = useState<'dashboard' | 'medication' | 'insurance-claims' | 'bookings' | 'appointments' | 'profile' | 'vitals' | 'essentials' | 'consult' | 'doctor' | 'scanner' | 'sos' | 'safezone'>('dashboard');
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#222222] flex items-center justify-center p-0 md:p-4 overflow-hidden">
@@ -33,6 +35,7 @@ const Index = () => {
           <Navbar
             isVisible={true}
             onProfileClick={() => setActiveMobileView('profile')}
+            onWalletClick={() => setIsWalletOpen(true)}
             isMobileOnly={true}
           />
         )}
@@ -96,6 +99,9 @@ const Index = () => {
         {activeMobileView === 'safezone' && (
           <SafeZoneDialog open={true} onOpenChange={(open) => !open && setActiveMobileView('dashboard')} isPage={true} />
         )}
+
+        {/* Wallet Overlay - renders at phone container level */}
+        <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
 
         {/* Global Bottom Navigation (Only for specific views) */}
         {activeMobileView === 'dashboard' && (

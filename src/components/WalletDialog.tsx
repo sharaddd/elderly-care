@@ -50,7 +50,7 @@ const WalletDialog = ({ open, onOpenChange }: WalletDialogProps) => {
 
     return (
         <>
-            <div className="w-full h-full max-w-none p-0 m-0 bg-[#fafafa] flex flex-col fixed inset-0 z-[100] duration-300 animate-in slide-in-from-right-full overflow-hidden">
+            <div className="w-full h-full max-w-none p-0 m-0 bg-[#fafafa] flex flex-col absolute inset-0 z-[100] duration-300 animate-in slide-in-from-right-full overflow-hidden">
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-20">
                     <button onClick={() => onOpenChange(false)} className="hover:bg-gray-100 p-2 rounded-full transition-colors active:scale-90">

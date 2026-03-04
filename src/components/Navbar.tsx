@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, MapPin, ChevronDown, Phone, User, Search, Target, AudioLines, Sparkles, WalletMinimal } from "lucide-react";
 import LogoIcon from "./LogoIcon";
-import WalletDialog from "./WalletDialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -116,13 +115,13 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
 interface NavbarProps {
   isVisible?: boolean;
   onProfileClick?: () => void;
+  onWalletClick?: () => void;
   isMobileOnly?: boolean;
 }
 
-const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: NavbarProps) => {
+const Navbar = ({ isVisible = true, onProfileClick, onWalletClick, isMobileOnly = false }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
-  const [isWalletOpen, setIsWalletOpen] = useState(false);
   const [weatherData, setWeatherData] = useState({
     temp: 22,
     condition: "Sunny",
@@ -273,7 +272,7 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
                 />
               </div>
               <button
-                onClick={() => setIsWalletOpen(true)}
+                onClick={onWalletClick}
                 className="h-[48px] w-[48px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 active:scale-95 transition-all shadow-sm"
               >
                 <WalletMinimal className="h-5 w-5 stroke-[2]" />
@@ -323,7 +322,6 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
         open={isVoiceAssistantOpen}
         onOpenChange={setIsVoiceAssistantOpen}
       />
-      <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
     </nav>
   );
 };
