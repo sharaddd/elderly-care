@@ -106,8 +106,8 @@ const VitalsDashboard = ({ open, onOpenChange, isPage = false }: VitalsDashboard
     const activeConfig = useMemo(() => vitalConfigs[selectedVital], [selectedVital]);
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className={`w-full h-full max-w-none p-0 m-0 rounded-none border-none shadow-none bg-[#fafafa] flex flex-col ${isPage ? 'absolute' : 'fixed'} inset-0 left-0 top-0 translate-x-0 translate-y-0 z-[100] duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full shadow-2xl`}>
+        <>
+            <div className={`w-full h-full bg-[#fafafa] flex flex-col absolute inset-0 z-[60] duration-300 animate-in slide-in-from-right-full shadow-2xl overflow-hidden`}>
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-20">
                     <button onClick={() => onOpenChange(false)} className="hover:bg-gray-100 p-2 rounded-full transition-colors active:scale-90">
@@ -122,7 +122,7 @@ const VitalsDashboard = ({ open, onOpenChange, isPage = false }: VitalsDashboard
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-6 py-6 pb-20 no-scrollbar space-y-6">
+                <div className="flex-1 overflow-y-auto px-6 py-6 pb-20 no-scrollbar space-y-6 relative">
                     {/* Sync Status */}
                     <div className="flex items-center justify-between bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100/50">
                         <div className="flex items-center gap-3">
@@ -182,7 +182,7 @@ const VitalsDashboard = ({ open, onOpenChange, isPage = false }: VitalsDashboard
                         />
                     </div>
                 </div>
-            </DialogContent>
+            </div>
 
             {/* Vitals Charts Dialog */}
             <Dialog open={isChartOpen} onOpenChange={setIsChartOpen}>
@@ -276,7 +276,7 @@ const VitalsDashboard = ({ open, onOpenChange, isPage = false }: VitalsDashboard
                     </div>
                 </DialogContent>
             </Dialog>
-        </Dialog>
+        </>
     );
 };
 
