@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
+import VideoConsultDialog from "./VideoConsultDialog";
 
 declare global {
     interface Window {
@@ -18,6 +19,7 @@ interface MobileDashboardProps {
 const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
     const [isWalletOpen, setIsWalletOpen] = useState(false);
     const [isVitalsOpen, setIsVitalsOpen] = useState(false);
+    const [isVideoConsultOpen, setIsVideoConsultOpen] = useState(false);
 
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
@@ -57,6 +59,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
             {/* Dialog Integrations */}
             <WalletDialog open={isWalletOpen} onOpenChange={isWalletOpen ? setIsWalletOpen : () => { }} />
             <VitalsDashboard open={isVitalsOpen} onOpenChange={setIsVitalsOpen} />
+            <VideoConsultDialog open={isVideoConsultOpen} onOpenChange={setIsVideoConsultOpen} />
 
             {/* Ongoing Appointment */}
             <div className="flex flex-col gap-2">
@@ -146,10 +149,19 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                     <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
                 </div>
 
-                {/* Card 3 */}
-                <div className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/5] p-3.5 flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group">
-                    <Video className="h-[22px] w-[22px] text-gray-700 mb-auto group-hover:scale-110 transition-transform" />
-                    <span className="text-gray-900 text-[13px] font-medium leading-snug tracking-wide">video<br />consultation</span>
+                {/* Card 3: Video Consultation */}
+                <div
+                    onClick={() => setIsVideoConsultOpen(true)}
+                    className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
+                >
+                    <div className="bg-emerald-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-emerald-100/30">
+                        <Video className="h-[24px] w-[24px] text-emerald-600 stroke-[2.5]" />
+                    </div>
+
+                    <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">Video<br />Consultation</span>
+
+                    {/* Gradient overlay for premium feel */}
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-emerald-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
                 </div>
             </div>
 
