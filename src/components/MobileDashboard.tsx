@@ -71,13 +71,35 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
 
             {/* 3 Columns Grid */}
             <div className="grid grid-cols-3 gap-[10px]">
-                {/* Card 1 */}
+                {/* Card 1: Today's Medication */}
                 <div
                     onClick={triggerMedicationNotification}
-                    className="bg-[#e9e9e9] border border-transparent rounded-[18px] aspect-[4/5] p-3.5 flex flex-col justify-end hover:bg-[#dfdfdf] transition-all cursor-pointer group"
+                    className="relative bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden shadow-sm"
                 >
-                    <Pill className="h-[22px] w-[22px] text-gray-700 mb-auto group-hover:scale-110 transition-transform" />
-                    <span className="text-gray-900 text-[13px] font-medium leading-snug tracking-wide">today's<br />medication</span>
+                    {/* Pending Indicator Badge - Fixed position and alert color */}
+                    <div className="absolute top-0 right-0 z-20">
+                        <div className="bg-[#ff5a5a] text-white text-[9.5px] font-black px-2.5 py-1.5 rounded-bl-[14px] shadow-sm flex items-center gap-1.5">
+                            <div className="w-1 h-1 bg-white rounded-full animate-pulse" />
+                            2 PENDING
+                        </div>
+                    </div>
+
+                    {/* Icon Container with top margin to avoid badge overlap */}
+                    <div className="mt-5 bg-indigo-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Pill className="h-[24px] w-[24px] text-indigo-600 drop-shadow-sm" />
+                    </div>
+
+                    <div className="flex flex-col gap-0.5 mt-2">
+                        <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">
+                            Today's
+                        </span>
+                        <span className="text-gray-900 text-[13.5px] font-bold leading-tight tracking-tight">
+                            Medication
+                        </span>
+                    </div>
+
+                    {/* Subtle micro-glow in blue */}
+                    <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-blue-100/30 rounded-full blur-2xl group-hover:bg-blue-200/40 transition-colors" />
                 </div>
 
                 {/* Card 2 */}

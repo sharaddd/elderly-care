@@ -1,8 +1,15 @@
 import { Home, Calendar, Stethoscope, Phone } from "lucide-react";
 import { useState } from "react";
 
-const MobileBottomNav = () => {
-    const [activeTab, setActiveTab] = useState("home");
+interface MobileBottomNavProps {
+    activeTab?: string;
+    onHomeClick?: () => void;
+}
+
+const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick }: MobileBottomNavProps) => {
+    const [localActiveTab, setLocalActiveTab] = useState("home");
+    const activeTab = propActiveTab || localActiveTab;
+    const setActiveTab = onHomeClick ? (tab: string) => { if (tab === 'home') onHomeClick(); setLocalActiveTab(tab); } : setLocalActiveTab;
 
     return (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md pb-safe pt-2 px-6 h-[80px]">
