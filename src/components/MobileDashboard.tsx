@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan, ShieldCheck } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan, ShieldCheck, FileCheck } from "lucide-react";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
 import VideoConsultDialog from "./VideoConsultDialog";
@@ -8,6 +8,7 @@ import FindDoctorDialog from "./FindDoctorDialog";
 import PrescriptionScanner from "./PrescriptionScanner";
 import SOSDialog from "./SOSDialog";
 import SafeZoneDialog from "./SafeZoneDialog";
+import InsuranceClaimsDialog from "./InsuranceClaimsDialog";
 
 declare global {
     interface Window {
@@ -19,9 +20,10 @@ declare global {
 
 interface MobileDashboardProps {
     onNavigateToMedication?: () => void;
+    onNavigateToInsurance?: () => void;
 }
 
-const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
+const MobileDashboard = ({ onNavigateToMedication, onNavigateToInsurance }: MobileDashboardProps) => {
     const [isWalletOpen, setIsWalletOpen] = useState(false);
     const [isVitalsOpen, setIsVitalsOpen] = useState(false);
     const [isVideoConsultOpen, setIsVideoConsultOpen] = useState(false);
@@ -164,11 +166,8 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col items-center gap-[4px] shrink-0 active:scale-95 transition-transform" onClick={(e) => { e.stopPropagation(); setIsSOSOpen(true); }}>
-                                    <div className="h-[48px] w-[48px] rounded-full border-[2px] border-gray-900 flex items-center justify-center shadow-sm">
-                                        <span className="text-gray-900 font-black text-[15px]">SOS</span>
-                                    </div>
-                                    <span className="text-gray-400 text-[9px] font-black uppercase tracking-widest leading-none">help</span>
+                                <div className="h-12 w-12 rounded-full border border-gray-100 bg-gray-50 flex items-center justify-center shrink-0">
+                                    <ArrowUpRight className="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
                         );
@@ -257,7 +256,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
 
             {/* 2 Columns Grid */}
             <div className="grid grid-cols-2 gap-[10px]">
-                {/* Card 1: Everyday Needs */}
+                {/* Card 1: Daily Essentials */}
                 <div
                     onClick={() => setIsDailyEssentialsOpen(true)}
                     className="bg-white border border-gray-100 rounded-[22px] aspect-[4/3] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
@@ -277,7 +276,7 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                             <Pill className="h-3.5 w-3.5 text-gray-300 group-hover:text-orange-400 transition-colors" />
                             <Wrench className="h-3.5 w-3.5 text-gray-300 group-hover:text-orange-400 transition-colors" />
                         </div>
-                        <span className="text-gray-900 text-[13.5px] font-bold leading-none tracking-tight uppercase">Everyday<br />needs</span>
+                        <span className="text-gray-900 text-[13.5px] font-bold leading-none tracking-tight uppercase">Daily<br />essentials</span>
                     </div>
 
                     {/* Decorative glow */}
@@ -352,19 +351,22 @@ const MobileDashboard = ({ onNavigateToMedication }: MobileDashboardProps) => {
                     <div className="absolute -right-4 -top-8 w-16 h-16 bg-emerald-50/40 rounded-full blur-2xl group-hover:bg-emerald-100 transition-colors" />
                 </button>
                 <button
-                    onClick={triggerAppointmentNotification}
-                    className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group"
+                    onClick={onNavigateToInsurance}
+                    className="relative bg-white border border-slate-100 rounded-[18px] h-[64px] flex items-center px-4 gap-3 shadow-sm hover:shadow-md transition-all active:scale-95 group overflow-hidden"
                 >
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">insurance claims</span>
-                </button>
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">timeline</span>
-                </button>
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">meal planning</span>
-                </button>
-                <button className="bg-[#e9e9e9] border border-transparent rounded-[14px] h-[52px] flex items-center justify-center hover:bg-[#dfdfdf] transition-all group">
-                    <span className="text-gray-800 text-[14px] font-medium tracking-wide">community</span>
+                    <div className="bg-slate-50 h-10 w-10 rounded-xl flex items-center justify-center group-hover:bg-slate-600 transition-colors duration-300">
+                        <FileCheck className="h-5 w-5 text-slate-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="flex flex-col items-start overflow-hidden">
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-gray-900 text-[12px] font-black tracking-tighter uppercase whitespace-nowrap">Claims</span>
+                            <div className="h-1.5 w-1.5 rounded-full bg-slate-500 animate-pulse" />
+                        </div>
+                        <span className="text-slate-600 text-[10px] font-black uppercase tracking-widest leading-none">INSURANCE</span>
+                    </div>
+
+                    {/* Decorative Background Layer */}
+                    <div className="absolute -right-4 -top-8 w-16 h-16 bg-slate-50/40 rounded-full blur-2xl group-hover:bg-slate-100 transition-colors" />
                 </button>
             </div>
         </div>

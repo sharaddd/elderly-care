@@ -5,13 +5,25 @@ import SOSDialog from "./SOSDialog";
 interface MobileBottomNavProps {
     activeTab?: string;
     onHomeClick?: () => void;
+    onCalendarClick?: () => void;
+    onDoctorClick?: () => void;
 }
 
-const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick }: MobileBottomNavProps) => {
+const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick, onCalendarClick, onDoctorClick }: MobileBottomNavProps) => {
     const [localActiveTab, setLocalActiveTab] = useState("home");
     const [isSOSOpen, setIsSOSOpen] = useState(false);
     const activeTab = propActiveTab || localActiveTab;
-    const setActiveTab = onHomeClick ? (tab: string) => { if (tab === 'home') onHomeClick(); setLocalActiveTab(tab); } : setLocalActiveTab;
+
+    const setActiveTab = (tab: string) => {
+        if (tab === 'home' && onHomeClick) {
+            onHomeClick();
+        } else if (tab === 'calendar' && onCalendarClick) {
+            onCalendarClick();
+        } else if (tab === 'health' && onDoctorClick) {
+            onDoctorClick();
+        }
+        setLocalActiveTab(tab);
+    };
 
     return (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md pb-safe pt-2 px-6 h-[80px]">
