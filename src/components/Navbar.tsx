@@ -28,6 +28,28 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
     setIsOpen(false);
   };
 
+  const detectLocation = () => {
+    setLocation(prev => ({ ...prev, address: "Detecting..." }));
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+          const data = await res.json();
+          const address = data.display_name.split(',').slice(0, 2).join(', ');
+          handleSelect({ title: "Current Location", address: address || "Location detected" });
+        } catch (error) {
+          console.error("Error detecting location:", error);
+          handleSelect({ title: "Home", address: "Dwarka Sec-14, Delhi." });
+        }
+      }, (error) => {
+        console.error("Geolocation error:", error);
+        handleSelect({ title: "Home", address: "Dwarka Sec-14, Delhi." });
+      });
+    }
+  };
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -64,7 +86,7 @@ const LocationPicker = ({ className = "" }: { className?: string }) => {
           </div>
           <button
             className="flex items-center gap-2 mt-3 text-primary text-sm font-medium hover:opacity-80 transition-opacity"
-            onClick={() => handleSelect({ title: "Current Location", address: "Detecting..." })}
+            onClick={detectLocation}
           >
             <Target className="h-4 w-4" />
             Detect my current location
