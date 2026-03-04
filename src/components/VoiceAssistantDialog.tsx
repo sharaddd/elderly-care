@@ -27,7 +27,7 @@ const VoiceAssistantDialog = ({ open, onOpenChange }: VoiceAssistantDialogProps)
     if (!open) return null;
 
     return (
-        <div className="absolute inset-0 z-[100] flex flex-col items-center justify-end p-4 bg-black/40 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-end p-4 bg-black/40 animate-in fade-in duration-200">
             {/* Click away layer to close */}
             <div className="absolute inset-0" onClick={() => onOpenChange(false)} />
 

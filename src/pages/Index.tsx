@@ -26,7 +26,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#222222] flex items-center justify-center p-0 md:p-4 overflow-hidden">
-      <div className="w-full max-w-[400px] h-full md:h-[852px] bg-background relative shadow-2xl md:rounded-[40px] overflow-hidden border-0 md:border-[8px] border-gray-900 flex flex-col">
+      <div className="w-full max-w-[400px] h-[100dvh] md:h-[852px] bg-background relative shadow-2xl md:rounded-[40px] overflow-hidden border-0 md:border-[8px] border-gray-900 flex flex-col">
 
         {/* Main Content Layer */}
         <div className="flex-1 overflow-y-auto no-scrollbar relative">

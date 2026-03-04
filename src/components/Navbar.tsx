@@ -188,99 +188,18 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
   ];
 
   return (
-    <>
-      <nav className={`${isMobileOnly ? "absolute" : "fixed"} top-0 left-0 right-0 z-[50] bg-white/90 backdrop-blur-md border-b border-gray-100 ${isMobileOnly ? "" : "lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12"} pt-2 pb-2 transition-all duration-300 ${!isVisible ? (isMobileOnly ? "hidden" : "hidden lg:block") : "block"}`}>
-        <div className="container mx-auto px-4 flex items-start justify-between">
-          {/* Left Side: Brand and Links/Location */}
-          <div className="flex gap-12 w-full lg:w-auto">
-            {/* --- DESKTOP LOGO AND LINKS --- */}
-            <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-12`}>
-              <a href="#home" className="flex items-center gap-3">
-                <LogoIcon className="h-10 w-10" />
-                <span className="font-sans text-[22px] font-bold text-white tracking-tight leading-none">
-                  Elderly Care
-                </span>
-              </a>
-            </div>
-
-            <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10`}>
-              {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  className="text-[15px] font-medium text-white/90 hover:text-white transition-colors lowercase"
-                >
-                  {l.label}
-                </a>
-              ))}
-            </div>
-
-            {/* --- MOBILE WIREFRAME HEADER --- */}
-            <div className={`${isMobileOnly ? "flex" : "lg:hidden flex"} flex-col w-full`}>
-              <div className="flex items-center justify-between w-full pt-1 -ml-4">
-                <LocationPicker className="border-none shadow-none bg-transparent p-0" />
-
-                <div className="flex items-center gap-2 -mr-4">
-                  <button
-                    onClick={() => setIsVoiceAssistantOpen(true)}
-                    className="h-[42px] w-[42px] bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-full shadow-md shadow-blue-200/50 flex items-center justify-center transition-all hover:opacity-95 active:scale-90 relative group"
-                  >
-                    <AudioLines className="h-[22px] w-[22px] stroke-[2.5]" />
-                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={onProfileClick}
-                    className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-gray-100 active:scale-95 ml-1"
-                  >
-                    <User className="h-[22px] w-[22px] text-gray-600 stroke-[1.5]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Static Weather & Date Bar */}
-              <div className="flex items-center gap-2 text-[11px] font-[900] text-gray-400 uppercase tracking-widest whitespace-nowrap px-2 pb-1 mt-1 border-t border-gray-100 pt-2 animate-in fade-in slide-in-from-top-1 duration-500">
-                <span>{weatherData.date || "Detecting Date..."}</span>
-                <div className="h-1 w-1 rounded-full bg-gray-300" />
-
-                <button
-                  onClick={() => window.open('https://weather.com', '_blank')}
-                  className="flex items-center gap-1 hover:text-orange-600 transition-colors active:scale-95 transition-transform"
-                >
-                  <span className="text-orange-500/80">{weatherData.temp}°C {weatherData.condition}</span>
-                </button>
-
-                <div className="h-1 w-1 rounded-full bg-gray-300" />
-
-                <button
-                  onClick={() => window.open('https://weather.com', '_blank')}
-                  className="flex items-center gap-1 hover:text-emerald-600 transition-colors active:scale-95 transition-transform"
-                >
-                  <span className="text-emerald-500/80">AQI {weatherData.aqi}</span>
-                </button>
-              </div>
-
-              {/* Static Search Bar & Wallet Row */}
-              <div className="flex items-center gap-3 px-1 pb-2 mt-2">
-                <div className="relative flex-1 group">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
-                  <input
-                    type="text"
-                    placeholder="Search medicines, doctors or care..."
-                    className="w-full bg-gray-50/80 border border-gray-100 rounded-[14px] h-[48px] pl-[42px] pr-4 text-gray-900 placeholder:text-gray-400 outline-none focus:ring-4 focus:ring-indigo-50/50 focus:border-indigo-200 transition-all text-[13px] font-semibold"
-                  />
-                </div>
-                <button
-                  onClick={() => setIsWalletOpen(true)}
-                  className="h-[48px] w-[48px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 active:scale-95 transition-all shadow-sm"
-                >
-                  <WalletMinimal className="h-5 w-5 stroke-[2]" />
-                </button>
-              </div>
-            </div>
+    <nav className={`${isMobileOnly ? "absolute" : "fixed"} top-0 left-0 right-0 z-[50] bg-white/90 backdrop-blur-md border-b border-gray-100 ${isMobileOnly ? "" : "lg:border-none lg:bg-gradient-to-b lg:from-black/50 lg:to-transparent pt-2 pb-2 lg:pt-4 lg:pb-12"} pt-2 pb-2 transition-all duration-300 ${!isVisible ? (isMobileOnly ? "hidden" : "hidden lg:block") : "block"}`}>
+      <div className="container mx-auto px-4 flex items-start justify-between">
+        {/* Left Side: Brand and Links/Location */}
+        <div className="flex gap-12 w-full lg:w-auto">
+          {/* --- DESKTOP LOGO AND LINKS --- */}
+          <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-12`}>
+            <a href="#home" className="flex items-center gap-3">
+              <LogoIcon className="h-10 w-10" />
+              <span className="font-sans text-[22px] font-bold text-white tracking-tight leading-none">
+                Elderly Care
+              </span>
+            </a>
           </div>
 
           <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10`}>
@@ -294,31 +213,110 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
               </a>
             ))}
           </div>
-        </div>
 
-        {/* Right Side: Location (Desktop) and Actions */}
-        <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10 mt-1`}>
-          <LocationPicker />
+          {/* --- MOBILE WIREFRAME HEADER --- */}
+          <div className={`${isMobileOnly ? "flex" : "lg:hidden flex"} flex-col w-full`}>
+            <div className="flex items-center justify-between w-full pt-1 -ml-4">
+              <LocationPicker className="border-none shadow-none bg-transparent p-0" />
 
-          <div className="flex items-center gap-8">
-            <CallbackDialog>
-              <div
-                className="flex items-center gap-2 text-[14px] font-medium text-white/90 hover:text-white transition-colors cursor-pointer"
-              >
-                <Phone className="h-5 w-5 stroke-[1.5]" />
-                <span>Request a callback</span>
+              <div className="flex items-center gap-2 -mr-4">
+                <button
+                  onClick={() => setIsVoiceAssistantOpen(true)}
+                  className="h-[42px] w-[42px] bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-full shadow-md shadow-blue-200/50 flex items-center justify-center transition-all hover:opacity-95 active:scale-90 relative group"
+                >
+                  <AudioLines className="h-[22px] w-[22px] stroke-[2.5]" />
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
+                  </span>
+                </button>
+
+                <button
+                  onClick={onProfileClick}
+                  className="h-[42px] w-[42px] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-gray-100 active:scale-95 ml-1"
+                >
+                  <User className="h-[22px] w-[22px] text-gray-600 stroke-[1.5]" />
+                </button>
               </div>
-            </CallbackDialog>
+            </div>
 
-            <button
-              onClick={onProfileClick}
-              className="p-1 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <User className="h-6 w-6 text-white stroke-[1.5]" />
-            </button>
+            {/* Static Weather & Date Bar */}
+            <div className="flex items-center gap-2 text-[11px] font-[900] text-gray-400 uppercase tracking-widest whitespace-nowrap px-2 pb-1 mt-1 border-t border-gray-100 pt-2 animate-in fade-in slide-in-from-top-1 duration-500">
+              <span>{weatherData.date || "Detecting Date..."}</span>
+              <div className="h-1 w-1 rounded-full bg-gray-300" />
+
+              <button
+                onClick={() => window.open('https://weather.com', '_blank')}
+                className="flex items-center gap-1 hover:text-orange-600 transition-colors active:scale-95 transition-transform"
+              >
+                <span className="text-orange-500/80">{weatherData.temp}°C {weatherData.condition}</span>
+              </button>
+
+              <div className="h-1 w-1 rounded-full bg-gray-300" />
+
+              <button
+                onClick={() => window.open('https://weather.com', '_blank')}
+                className="flex items-center gap-1 hover:text-emerald-600 transition-colors active:scale-95 transition-transform"
+              >
+                <span className="text-emerald-500/80">AQI {weatherData.aqi}</span>
+              </button>
+            </div>
+
+            {/* Static Search Bar & Wallet Row */}
+            <div className="flex items-center gap-3 px-1 pb-2 mt-2">
+              <div className="relative flex-1 group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Search medicines, doctors or care..."
+                  className="w-full bg-gray-50/80 border border-gray-100 rounded-[14px] h-[48px] pl-[42px] pr-4 text-gray-900 placeholder:text-gray-400 outline-none focus:ring-4 focus:ring-indigo-50/50 focus:border-indigo-200 transition-all text-[13px] font-semibold"
+                />
+              </div>
+              <button
+                onClick={() => setIsWalletOpen(true)}
+                className="h-[48px] w-[48px] bg-white border border-gray-100 rounded-[14px] flex items-center justify-center text-indigo-600 active:scale-95 transition-all shadow-sm"
+              >
+                <WalletMinimal className="h-5 w-5 stroke-[2]" />
+              </button>
+            </div>
           </div>
         </div>
-      </nav>
+
+        <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10`}>
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-[15px] font-medium text-white/90 hover:text-white transition-colors lowercase"
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Right Side: Location (Desktop) and Actions */}
+      <div className={`${isMobileOnly ? "hidden" : "hidden lg:flex"} items-center gap-10 mt-1`}>
+        <LocationPicker />
+
+        <div className="flex items-center gap-8">
+          <CallbackDialog>
+            <div
+              className="flex items-center gap-2 text-[14px] font-medium text-white/90 hover:text-white transition-colors cursor-pointer"
+            >
+              <Phone className="h-5 w-5 stroke-[1.5]" />
+              <span>Request a callback</span>
+            </div>
+          </CallbackDialog>
+
+          <button
+            onClick={onProfileClick}
+            className="p-1 hover:bg-white/10 rounded-full transition-colors"
+          >
+            <User className="h-6 w-6 text-white stroke-[1.5]" />
+          </button>
+        </div>
+      </div>
 
       {/* Shared Components */}
       <VoiceAssistantDialog
@@ -326,7 +324,7 @@ const Navbar = ({ isVisible = true, onProfileClick, isMobileOnly = false }: Navb
         onOpenChange={setIsVoiceAssistantOpen}
       />
       <WalletDialog open={isWalletOpen} onOpenChange={setIsWalletOpen} />
-    </>
+    </nav>
   );
 };
 
