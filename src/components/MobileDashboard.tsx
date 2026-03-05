@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
-import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan, ShieldCheck, FileCheck } from "lucide-react";
+import { Search, Pill, Activity, Video, CalendarHeart, PhoneCall, Wallet, WalletMinimal, Heart, Droplets, ShoppingCart, Wrench, Stethoscope, ArrowUpRight, MapPin, Scan, ShieldCheck, FileCheck, CheckCircle2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/lib/supabase";
 import WalletDialog from "./WalletDialog";
 import VitalsDashboard from "./VitalsDashboard";
 import VideoConsultDialog from "./VideoConsultDialog";
@@ -99,6 +101,21 @@ const MobileDashboard = ({
         touchEndX.current = 0;
     };
 
+    // Real-time Database Fetch for Medal Alert
+    const { data: meds = [] } = useQuery({
+        queryKey: ['medications'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('medications')
+                .select('*');
+            if (error) throw error;
+            return data || [];
+        }
+    });
+
+    const pendingCount = (meds as any[]).filter(m => m.status !== 'taken').length;
+    const hasMeds = (meds as any[]).length > 0;
+
     const triggerMedicationNotification = () => {
         // Navigate to the schedule view
         if (onNavigateToMedication) {
@@ -190,12 +207,25 @@ const MobileDashboard = ({
                 onClick={triggerMedicationNotification}
                 className="relative bg-white border border-gray-100 rounded-[24px] p-5 flex items-center justify-between hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden shadow-sm"
             >
-                {/* Pending Indicator Badge */}
+                {/* Pending Indicator Badge - Dynamic from Supabase */}
                 <div className="absolute top-0 right-0 z-20">
-                    <div className="bg-[#ff5a5a] text-white text-[10px] font-black px-3 py-1.5 rounded-bl-[16px] shadow-sm flex items-center gap-1.5">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                        2 PENDING
-                    </div>
+                    {hasMeds ? (
+                        pendingCount > 0 ? (
+                            <div className="bg-[#ff5a5a] text-white text-[10px] font-black px-3 py-1.5 rounded-bl-[16px] shadow-sm flex items-center gap-1.5 animate-in slide-in-from-top-2 duration-500">
+                                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                {pendingCount} {pendingCount === 1 ? 'PENDING' : 'PENDING'}
+                            </div>
+                        ) : (
+                            <div className="bg-emerald-500 text-white text-[10px] font-black px-3 py-1.5 rounded-bl-[16px] shadow-sm flex items-center gap-1.5 animate-in slide-in-from-top-2 duration-500">
+                                <CheckCircle2 className="w-3 h-3 text-white" />
+                                ALL CLEAR
+                            </div>
+                        )
+                    ) : (
+                        <div className="bg-gray-100 text-gray-400 text-[10px] font-black px-3 py-1.5 rounded-bl-[16px] flex items-center gap-1.5">
+                            NO SCHEDULE
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex items-center gap-5">
@@ -209,7 +239,7 @@ const MobileDashboard = ({
                             TODAY'S MEDICATION
                         </span>
                         <span className="text-gray-400 text-[12px] font-bold uppercase tracking-wider">
-                            Check your schedule
+                            {hasMeds ? (pendingCount > 0 ? `You have ${pendingCount} doses left` : 'You are on schedule') : 'Tap to set schedule'}
                         </span>
                     </div>
                 </div>

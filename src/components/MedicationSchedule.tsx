@@ -11,6 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface MedicationScheduleProps {
     onBack: () => void;
@@ -25,6 +29,7 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
     const [newName, setNewName] = useState("");
     const [newTime, setNewTime] = useState("11:00");
     const [newImage, setNewImage] = useState<string | null>(null);
+    const queryClient = useQueryClient();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -61,19 +66,65 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
         return { monthShort, dayNum, weekDay, fullDisplay };
     }, []);
 
-    // Initial State for Medicines
-    const [meds, setMeds] = useState<{ id: number, time: string, name: string, taken: boolean, status: string, image?: string }[]>([
-        { id: 1, time: '11:00 AM', name: 'Norvasc 2.5 mg', taken: true, status: 'taken', image: '/silver_pack.png' },
-        { id: 2, time: '11:00 AM', name: 'Leverothxyine 5 mg', taken: false, status: 'pending', image: '/blue_pack.png' },
-        { id: 3, time: '11:00 AM', name: 'Amoxycylin 200 mg', taken: false, status: 'pending', image: '/green_pack.png' },
-        { id: 4, time: '03:00 PM', name: 'Norvasc 2.5 mg', taken: true, status: 'taken', image: '/silver_pack.png' },
-        { id: 5, time: '03:00 PM', name: 'Leverothxyine 5 mg', taken: false, status: 'pending', image: '/blue_pack.png' },
-        { id: 6, time: '03:00 PM', name: 'Amoxycylin 200 mg', taken: false, status: 'pending', image: '/green_pack.png' },
-        { id: 7, time: '03:00 PM', name: 'Ofloxacin 500 mg', taken: false, status: 'pending', image: '/orange_pack.png' },
-        { id: 8, time: '09:00 PM', name: 'Norvasc 2.5 mg', taken: true, status: 'taken', image: '/silver_pack.png' },
-        { id: 9, time: '09:00 PM', name: 'Leverothxyine 5 mg', taken: false, status: 'pending', image: '/blue_pack.png' },
-        { id: 10, time: '09:00 PM', name: 'Amoxycylin 200 mg', taken: false, status: 'pending', image: '/green_pack.png' },
-    ]);
+    // React Query for Medicines - Caches data so it's instant next time
+    const { data: meds = [], isPending } = useQuery({
+        queryKey: ['medications'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('medications')
+                .select('*')
+                .order('created_at', { ascending: true });
+            if (error) throw error;
+            return data || [];
+        }
+    });
+
+    // Mutation for adding meds
+    const addMutation = useMutation({
+        mutationFn: async (newEntry: any) => {
+            const { data, error } = await supabase
+                .from('medications')
+                .insert([newEntry])
+                .select();
+            if (error) throw error;
+            return data[0];
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['medications'] });
+            toast.success('Medicine added');
+        },
+        onError: () => toast.error('Failed to add medicine')
+    });
+
+    // Mutation for status changes
+    const toggleMutation = useMutation({
+        mutationFn: async ({ id, status, taken }: any) => {
+            const { error } = await supabase
+                .from('medications')
+                .update({ status, taken })
+                .eq('id', id);
+            if (error) throw error;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['medications'] });
+        },
+        onError: () => toast.error('Sync failed')
+    });
+
+    // Mutation for deleting
+    const deleteMutation = useMutation({
+        mutationFn: async (id: any) => {
+            const { error } = await supabase
+                .from('medications')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['medications'] });
+        },
+        onError: () => toast.error('Delete failed')
+    });
 
     const formatTime = (timeStr: string) => {
         const [hour, min] = timeStr.split(':');
@@ -83,11 +134,10 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
         return `${displayH.toString().padStart(2, '0')}:${min} ${ampm}`;
     };
 
-    const handleAddMed = () => {
+    const handleAddMed = async () => {
         if (!newName) return;
 
         const newEntry = {
-            id: Date.now(),
             time: formatTime(newTime),
             name: newName,
             taken: false,
@@ -95,9 +145,7 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
             image: newImage || undefined
         };
 
-        setMeds([...meds, newEntry].sort((a, b) => {
-            return a.time.localeCompare(b.time);
-        }));
+        addMutation.mutate(newEntry);
 
         setNewName("");
         setNewTime("11:00");
@@ -105,25 +153,26 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
         setIsAddOpen(false);
     };
 
-    const toggleMedStatus = (id: number) => {
-        setMeds(meds.map(m => {
-            if (m.id === id) {
-                const newStatus = m.status === 'taken' ? 'pending' : 'taken';
-                return { ...m, status: newStatus, taken: newStatus === 'taken' };
-            }
-            return m;
-        }));
+    const toggleMedStatus = (id: any) => {
+        const med = meds.find((m: any) => m.id === id);
+        if (!med) return;
+
+        const newStatus = med.status === 'taken' ? 'pending' : 'taken';
+        const newTaken = newStatus === 'taken';
+
+        toggleMutation.mutate({ id, status: newStatus, taken: newTaken });
     };
 
-    const removeMed = (id: number) => {
-        const toDelete = meds.find(m => m.id === id);
+    const removeMed = (id: any) => {
+        const toDelete = meds.find((m: any) => m.id === id);
         setLastDeleted(toDelete);
-        setMeds(meds.filter(m => m.id !== id));
+        deleteMutation.mutate(id);
     };
 
-    const undoDelete = () => {
+    const undoDelete = async () => {
         if (lastDeleted) {
-            setMeds([...meds, lastDeleted].sort((a, b) => a.id - b.id));
+            const { id, created_at, ...rest } = lastDeleted;
+            addMutation.mutate(rest);
             setLastDeleted(null);
         }
     };
@@ -267,24 +316,26 @@ const MedicationSchedule = ({ onBack }: MedicationScheduleProps) => {
                             {/* Vertical Timeline Line */}
                             <div className="absolute left-[20px] top-4 bottom-4 w-px bg-gray-200 z-0" />
 
-                            {uniqueTimeSlots.map(slot => renderMedBlock(slot))}
+                            {isPending ? (
+                                <div className="flex flex-col items-center justify-center py-20 gap-4">
+                                    <div className="h-10 w-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[12px]">Loading your medications</p>
+                                </div>
+                            ) : (meds as any[]).length > 0 ? (
+                                uniqueTimeSlots.map(slot => renderMedBlock(slot))
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-20 text-center px-6">
+                                    <div className="bg-gray-50 h-20 w-20 rounded-full flex items-center justify-center mb-4">
+                                        <PlusCircle className="h-10 w-10 text-gray-200" />
+                                    </div>
+                                    <h3 className="text-gray-900 font-bold text-[18px]">No medicines yet</h3>
+                                    <p className="text-gray-400 text-sm mt-1">Add your first medication below to get started</p>
+                                </div>
+                            )}
                         </div>
 
-                        {/* Bottom Action Button */}
-                        <div className="pt-6 relative z-10 pb-12">
-                            <DialogTrigger asChild>
-                                <button className="w-full bg-gray-900 h-[100px] rounded-[24px] flex items-center justify-between px-6 text-white active:bg-black transition-all shadow-xl shadow-gray-200 group overflow-hidden relative">
-                                    <div className="flex flex-col items-start text-left">
-                                        <span className="text-[20px] font-bold tracking-tight">Schedule New Intake</span>
-                                        <span className="text-[13px] text-gray-400 font-medium">Update the daily care plan</span>
-                                    </div>
-                                    <div className="bg-white/10 h-[56px] w-[56px] rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                                        <Plus className="h-[32px] w-[32px] text-white stroke-[2.5]" />
-                                    </div>
-                                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-2xl" />
-                                </button>
-                            </DialogTrigger>
-                        </div>
+                        {/* Bottom Padding */}
+                        <div className="pt-6 relative z-10 pb-20" />
                     </div>
                 </div>
 
