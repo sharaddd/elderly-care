@@ -185,39 +185,48 @@ const MobileDashboard = ({
                 </div>
             </div>
 
-            {/* 3 Columns Grid */}
-            <div className="grid grid-cols-3 gap-[10px]">
-                {/* Card 1: Today's Medication */}
-                <div
-                    onClick={triggerMedicationNotification}
-                    className="relative bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden shadow-sm"
-                >
-                    {/* Pending Indicator Badge - Fixed position and alert color */}
-                    <div className="absolute top-0 right-0 z-20">
-                        <div className="bg-[#ff5a5a] text-white text-[9.5px] font-black px-2.5 py-1.5 rounded-bl-[14px] shadow-sm flex items-center gap-1.5">
-                            <div className="w-1 h-1 bg-white rounded-full animate-pulse" />
-                            2 PENDING
-                        </div>
+            {/* Hero Card: Today's Medication (Full Width) */}
+            <div
+                onClick={triggerMedicationNotification}
+                className="relative bg-white border border-gray-100 rounded-[24px] p-5 flex items-center justify-between hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden shadow-sm"
+            >
+                {/* Pending Indicator Badge */}
+                <div className="absolute top-0 right-0 z-20">
+                    <div className="bg-[#ff5a5a] text-white text-[10px] font-black px-3 py-1.5 rounded-bl-[16px] shadow-sm flex items-center gap-1.5">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                        2 PENDING
                     </div>
-
-                    {/* Icon Container with top margin to avoid badge overlap */}
-                    <div className="mt-5 bg-indigo-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Pill className="h-[24px] w-[24px] text-indigo-600 drop-shadow-sm" />
-                    </div>
-
-                    <div className="flex flex-col gap-0.5 mt-2">
-                        <span className="text-gray-900 text-[12.5px] font-black leading-tight tracking-tighter uppercase">
-                            TODAY'S<br />MEDICATION
-                        </span>
-                    </div>
-
-                    {/* Subtle micro-glow in blue */}
-                    <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-blue-100/30 rounded-full blur-2xl group-hover:bg-blue-200/40 transition-colors" />
                 </div>
 
+                <div className="flex items-center gap-5">
+                    {/* Icon Container */}
+                    <div className="bg-indigo-50 h-14 w-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-indigo-100">
+                        <Pill className="h-[28px] w-[28px] text-indigo-600 drop-shadow-sm" />
+                    </div>
+
+                    <div className="flex flex-col gap-0.5">
+                        <span className="text-gray-900 text-[16px] font-black leading-tight tracking-tight uppercase">
+                            TODAY'S MEDICATION
+                        </span>
+                        <span className="text-gray-400 text-[12px] font-bold uppercase tracking-wider">
+                            Check your schedule
+                        </span>
+                    </div>
+                </div>
+
+                <div className="h-10 w-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center">
+                    <ArrowUpRight className="h-5 w-5 text-gray-400" />
+                </div>
+
+                {/* Subtle micro-glow in blue */}
+                <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-100/30 rounded-full blur-3xl group-hover:bg-blue-200/40 transition-colors" />
+            </div>
+
+            {/* Row 1: Vitals & Consult (2 Columns) */}
+            <div className="grid grid-cols-2 gap-[10px]">
                 <div
                     onClick={onNavigateToVitals}
-                    className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
+                    className="bg-white border border-gray-100 rounded-[24px] aspect-[4/4] p-5 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="flex justify-between items-start">
                         <div className="bg-indigo-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-indigo-100/30">
@@ -226,19 +235,18 @@ const MobileDashboard = ({
                         <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse mt-2" />
                     </div>
 
-                    <div className="flex flex-col gap-2.5">
-                        <div className="flex flex-col">
-                            <div className="flex items-center gap-1.5">
+                    <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
                                 <Heart className="h-3 w-3 text-red-500 fill-red-500" />
-                                <span className="text-[14px] font-black text-gray-900 tracking-tight">87<span className="text-[10px] font-bold text-gray-400 ml-0.5">BPM</span></span>
+                                <span className="text-[14px] font-black text-gray-900 tracking-tight">87</span>
                             </div>
-                            <div className="flex items-center gap-1.5">
+                            <div className="flex items-center gap-1">
                                 <Droplets className="h-3 w-3 text-blue-500 fill-blue-500" />
-                                <span className="text-[14px] font-black text-gray-900 tracking-tight">98<span className="text-[10px] font-bold text-gray-400 ml-0.5">%</span></span>
+                                <span className="text-[14px] font-black text-gray-900 tracking-tight">98%</span>
                             </div>
                         </div>
-
-                        <span className="text-gray-900 text-[12px] font-black leading-tight tracking-tighter uppercase">VITALS<br />DASHBOARD</span>
+                        <span className="text-gray-900 text-[12px] font-black leading-tight tracking-tighter uppercase">MY HEALTH VITALS</span>
                     </div>
 
                     {/* Gradient overlay for premium feel */}
@@ -247,20 +255,19 @@ const MobileDashboard = ({
 
                 <div
                     onClick={onNavigateToConsult}
-                    className="bg-white border border-gray-100 rounded-[22px] aspect-[4/5] p-4 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
+                    className="bg-white border border-gray-100 rounded-[24px] aspect-[4/4] p-5 flex flex-col justify-between hover:shadow-lg transition-all cursor-pointer group shadow-sm relative overflow-hidden active:scale-95"
                 >
                     <div className="bg-emerald-50 h-11 w-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-emerald-100/30">
                         <Video className="h-[24px] w-[24px] text-emerald-600 stroke-[2.5]" />
                     </div>
 
-                    <span className="text-gray-900 text-[12px] font-black text-left leading-tight tracking-tighter uppercase">VIDEO<br />CONSULTATION</span>
+                    <span className="text-gray-900 text-[12px] font-black text-left leading-tight tracking-tighter uppercase">CALL CARE<br />MANAGER</span>
 
                     {/* Gradient overlay for premium feel */}
                     <div className="absolute top-0 right-0 w-12 h-12 bg-emerald-50/30 rounded-full -mr-4 -mt-4 blur-xl" />
                 </div>
             </div>
 
-            <div className="h-px w-full bg-gray-200 my-1" />
 
             {/* 2 Columns Grid */}
             <div className="grid grid-cols-2 gap-[10px]">
@@ -309,7 +316,7 @@ const MobileDashboard = ({
                             <MapPin className="h-3.5 w-3.5 text-gray-300 group-hover:text-blue-400 transition-colors" />
                             <PhoneCall className="h-3.5 w-3.5 text-gray-300 group-hover:text-blue-400 transition-colors" />
                         </div>
-                        <span className="text-gray-900 text-[13.5px] font-bold leading-none tracking-tight uppercase">Critical Care<br />appointment</span>
+                        <span className="text-gray-900 text-[13.5px] font-bold leading-none tracking-tight uppercase">BOOK A<br />SPECIALIST</span>
                     </div>
 
                     {/* Decorative glow */}
