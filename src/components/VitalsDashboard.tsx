@@ -129,7 +129,7 @@ const VitalsDashboard = ({ open, onOpenChange, isPage = false }: VitalsDashboard
                             <div className="bg-white p-2 rounded-xl shadow-sm">
                                 <RefreshCw className="h-4 w-4 text-indigo-600 animate-spin-slow" />
                             </div>
-                            <span className="text-[13px] font-bold text-indigo-900">syncing from Apple Watch Series 9</span>
+                            <span className="text-[13px] font-bold text-indigo-900">Syncing from Apple Watch Series 9</span>
                         </div>
                         <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                     </div>

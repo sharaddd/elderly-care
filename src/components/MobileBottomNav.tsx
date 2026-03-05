@@ -32,37 +32,39 @@ const MobileBottomNav = ({ activeTab: propActiveTab, onHomeClick, onCalendarClic
                 {/* Home */}
                 <button
                     onClick={() => setActiveTab("home")}
-                    className={`flex flex-col items-center justify-center w-12 transition-colors ${activeTab === "home" ? "text-primary" : "text-gray-600 hover:text-gray-900"}`}
+                    className={`flex flex-col items-center justify-center transition-colors ${activeTab === "home" ? "text-primary font-black" : "text-gray-500 font-bold"}`}
                 >
-                    <Home className="h-[28px] w-[28px] stroke-[2]" />
+                    <Home className={`h-[24px] w-[24px] ${activeTab === "home" ? "stroke-[2.5]" : "stroke-[2]"}`} />
+                    <span className="text-[10px] mt-1 tracking-tight">Home</span>
                 </button>
 
                 {/* Calendar */}
                 <button
                     onClick={() => setActiveTab("calendar")}
-                    className={`flex flex-col items-center justify-center w-12 transition-colors ${activeTab === "calendar" ? "text-primary" : "text-gray-600 hover:text-gray-900"}`}
+                    className={`flex flex-col items-center justify-center transition-colors ${activeTab === "calendar" ? "text-primary font-black" : "text-gray-500 font-bold"}`}
                 >
-                    <Calendar className="h-[28px] w-[28px] stroke-[2]" />
+                    <Calendar className={`h-[24px] w-[24px] ${activeTab === "calendar" ? "stroke-[2.5]" : "stroke-[2]"}`} />
+                    <span className="text-[10px] mt-1 tracking-tight">Bookings</span>
                 </button>
 
                 {/* Vitals/Health */}
                 <button
                     onClick={() => setActiveTab("health")}
-                    className={`flex flex-col items-center justify-center w-12 transition-colors ${activeTab === "health" ? "text-primary" : "text-gray-600 hover:text-gray-900"}`}
+                    className={`flex flex-col items-center justify-center transition-colors ${activeTab === "health" ? "text-primary font-black" : "text-gray-500 font-bold"}`}
                 >
-                    <div className="relative">
-                        <Stethoscope className="h-[28px] w-[28px] stroke-[2]" />
-                    </div>
+                    <Stethoscope className={`h-[24px] w-[24px] ${activeTab === "health" ? "stroke-[2.5]" : "stroke-[2]"}`} />
+                    <span className="text-[10px] mt-1 tracking-tight">Appointments</span>
                 </button>
 
                 {/* SOS */}
                 <button
                     onClick={() => setIsSOSOpen(true)}
-                    className="flex flex-col items-center justify-center w-12 transition-all active:scale-90"
+                    className="flex flex-col items-center justify-center transition-all active:scale-90"
                 >
-                    <div className="h-[34px] w-[34px] rounded-full bg-red-600 flex items-center justify-center shadow-lg shadow-red-100 ring-4 ring-red-50">
-                        <span className="text-white font-[900] text-[11px] tracking-tighter uppercase leading-none">SOS</span>
+                    <div className="h-[28px] w-[28px] rounded-full bg-red-600 flex items-center justify-center shadow-lg shadow-red-100 ring-2 ring-red-50">
+                        <ShieldAlert className="h-4 w-4 text-white" />
                     </div>
+                    <span className="text-[10px] mt-1 font-black text-red-600 tracking-tight">SOS</span>
                 </button>
             </div>
 
